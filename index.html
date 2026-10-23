@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KRC Labs — Systems Architecture & Esoteric Runtime Engineering</title>
+  <meta name="description" content="Autonomous Systems Architecture, Kernel Telemetry & Esoteric Runtime Engineering Research Laboratory">
+  <link rel="icon" type="image/png" href="assets/avatar.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(56, 189, 248, 0.15);
+      --card-hover-border: rgba(56, 189, 248, 0.45);
+      --cyan: #38bdf8;
+      --mint: #34d399;
+      --purple: #c084fc;
+      --coral: #fb7185;
+      --amber: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Matrix Glow */
+    .ambient-glow {
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(192, 132, 252, 0.05) 40%, rgba(7, 10, 18, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+    }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 96px 0 64px;
+      text-align: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--mint);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--mint);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 80%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 4px 20px rgba(2, 132, 199, 0.35);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 28px rgba(2, 132, 199, 0.55);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(30, 41, 59, 0.8);
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+    }
+
+    /* Telemetry Ribbon */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 48px 0 80px;
+    }
+    .tele-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+    }
+    .tele-num {
+      font-size: 2.25rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+    .tele-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Product Showcase Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 96px;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .product-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      color: #fff;
+    }
+    .product-tag {
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--mint);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+    .product-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.55;
+    }
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tech-stack {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tech-badge {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+    }
+    .lead-badge {
+      font-size: 0.8rem;
+      color: var(--purple);
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 48px 0;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: var(--cyan);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <div class="container">
+    <!-- Navigation -->
+    <nav>
+      <a href="/" class="brand">
+        <img src="assets/avatar.png" alt="KRC Labs" class="brand-logo">
+        <span>KRC LABS</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#products">Projects</a>
+        <a href="#telemetry">Telemetry</a>
+        <a href="https://github.com/KRC-Labs" target="_blank">GitHub ↗</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="overview">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        <span>CLUSTER ACTIVE // 10 ENGINES OPERATIONAL</span>
+      </div>
+      <h1>Systems Architecture &<br>Esoteric Runtime Engineering</h1>
+      <p>
+        저수준 커널 텔레메트리, 제로 드라이버 WFP 패킷 엔진, 마이크로 VM 격리 검증 및 차세대 FastMCP 자율 분산 시스템을 연구하는 엔지니어링 랩입니다.
+      </p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">10대 핵심 프로젝트 둘러보기</a>
+        <a href="https://github.com/KRC-Labs" target="_blank" class="btn btn-secondary">KRC-Labs Organization ↗</a>
+      </div>
+    </section>
+
+    <!-- Telemetry -->
+    <section id="telemetry">
+      <div class="telemetry-grid">
+        <div class="tele-card">
+          <div class="tele-num">10</div>
+          <div class="tele-label">Core Engine Repositories</div>
+        </div>
+        <div class="tele-card">
+          <div class="tele-num">2</div>
+          <div class="tele-label">Distributed Cluster Nodes</div>
+        </div>
+        <div class="tele-card">
+          <div class="tele-num">100%</div>
+          <div class="tele-label">Private CI/CD Automation</div>
+        </div>
+        <div class="tele-card">
+          <div class="tele-num">42k+</div>
+          <div class="tele-label">Verified Tool Invocations</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section id="products">
+      <h2 class="section-title">Autonomous Project Showcase</h2>
+      <p class="section-desc">KRC-Labs 산하에서 연구 및 개발 중인 10대 핵심 시스템 및 도메인별 런타임 프로젝트 카탈로그입니다.</p>
+
+      <div class="products-grid">
+        <!-- 1. netvibe -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">netvibe</span>
+              <span class="product-tag">v0.4.0</span>
+            </div>
+            <p class="product-desc">Rust 및 Windows Filtering Platform(WFP) 기반 제로 드라이버 프로세스 네트워크 스니퍼, 대역폭 셰이퍼 & QUIC 카오스 인젝터 MCP.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Rust</span>
+              <span class="tech-badge">WFP</span>
+              <span class="tech-badge">QUIC</span>
+            </div>
+            <span class="lead-badge">@kLauncher1</span>
+          </div>
+        </div>
+
+        <!-- 2. binvibe -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">binvibe</span>
+              <span class="product-tag">Native</span>
+            </div>
+            <p class="product-desc">Rust 및 C++ 기반 고속 바이너리 분석기, PE/ELF 메모리 패턴 스캐너 및 RVA 오프셋 계산 자동화 MCP 서버.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">C++</span>
+              <span class="tech-badge">Rust</span>
+              <span class="tech-badge">Disasm</span>
+            </div>
+            <span class="lead-badge">@GHSFS</span>
+          </div>
+        </div>
+
+        <!-- 3. vulnforge-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">vulnforge-mcp</span>
+              <span class="product-tag">v1.24.0</span>
+            </div>
+            <p class="product-desc">Micro-VM(Firecracker/gVisor) 격리 검증 툴킷 및 에페머럴 샌드박스 경계 보안 감사 게이트웨이.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Micro-VM</span>
+              <span class="tech-badge">FastMCP</span>
+              <span class="tech-badge">Security</span>
+            </div>
+            <span class="lead-badge">@mason-keller</span>
+          </div>
+        </div>
+
+        <!-- 4. vibeside-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">vibeside-mcp</span>
+              <span class="product-tag">v0.23.0</span>
+            </div>
+            <p class="product-desc">Node.js/V8 힙 스냅샷 프로파일러, Retainer Tree 시각화 및 100개 코어 MCP 도구를 통합 지휘하는 관제 허브.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">TypeScript</span>
+              <span class="tech-badge">V8 Profiler</span>
+              <span class="tech-badge">100-Tools</span>
+            </div>
+            <span class="lead-badge">@minseokchoi87</span>
+          </div>
+        </div>
+
+        <!-- 5. webarcheology-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">webarcheology-mcp</span>
+              <span class="product-tag">Research</span>
+            </div>
+            <p class="product-desc">자율 웹 아키텍처 디컴파일러, DOM 변경 이력 역추적 및 오프라인 시각적 타임머신 복원 엔진.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Chromium</span>
+              <span class="tech-badge">DOM Tree</span>
+              <span class="tech-badge">Forensics</span>
+            </div>
+            <span class="lead-badge">@junhokim985</span>
+          </div>
+        </div>
+
+        <!-- 6. remote-auto-ai-worker -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">remote-auto-ai-worker</span>
+              <span class="product-tag">Serverless</span>
+            </div>
+            <p class="product-desc">Cloudflare Worker 및 Edge 기반 서버리스 리스 토큰 게이트웨이 및 글로벌 비동기 태스크 스케줄러.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Cloudflare</span>
+              <span class="tech-badge">Edge Worker</span>
+              <span class="tech-badge">OAuth</span>
+            </div>
+            <span class="lead-badge">@alexmiller326</span>
+          </div>
+        </div>
+
+        <!-- 7. vidcompact-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">vidcompact-mcp</span>
+              <span class="product-tag">Media</span>
+            </div>
+            <p class="product-desc">FFmpeg 기반 무손실 비디오 압축 최적화 및 지각적 품질(VMAF) 보존 비디오 프로세싱 MCP.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">FFmpeg</span>
+              <span class="tech-badge">VMAF</span>
+              <span class="tech-badge">Codec</span>
+            </div>
+            <span class="lead-badge">@kevink661</span>
+          </div>
+        </div>
+
+        <!-- 8. omni-audio-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">omni-audio-mcp</span>
+              <span class="product-tag">Audio DSP</span>
+            </div>
+            <p class="product-desc">Go 네이티브 초저지연 오디오 트래커 및 절차적 8비트 사운드 FX 합성 엔진 MCP 서버.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Go</span>
+              <span class="tech-badge">DSP</span>
+              <span class="tech-badge">Synthesizer</span>
+            </div>
+            <span class="lead-badge">@RFSEO</span>
+          </div>
+        </div>
+
+        <!-- 9. omnibrowse -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">omnibrowse</span>
+              <span class="product-tag">Browser</span>
+            </div>
+            <p class="product-desc">차세대 듀얼 코어 초경량 브라우저 (Human Native GUI + AI Agent Headless MCP 통합 아키텍처).</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">Rust</span>
+              <span class="tech-badge">Cargo</span>
+              <span class="tech-badge">Headless</span>
+            </div>
+            <span class="lead-badge">@minjun-k818</span>
+          </div>
+        </div>
+
+        <!-- 10. omni-control-mcp -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <span class="product-name">omni-control-mcp</span>
+              <span class="product-tag">Platform</span>
+            </div>
+            <p class="product-desc">유니버설 MCP 웹 콘솔 및 멀티 플랫폼 코어 API 자율 관제 오케스트레이션 서버.</p>
+          </div>
+          <div class="product-footer">
+            <div class="tech-stack">
+              <span class="tech-badge">TypeScript</span>
+              <span class="tech-badge">Python</span>
+              <span class="tech-badge">Orchestration</span>
+            </div>
+            <span class="lead-badge">@mwkang9146</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 <strong>KRC Labs</strong>. All rights reserved.</p>
+      <p style="margin-top: 8px;">
+        Seoul, South Korea · <a href="mailto:jo06023535@gmail.com">jo06023535@gmail.com</a> · <a href="https://github.com/KRC-Labs" target="_blank">github.com/KRC-Labs</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
