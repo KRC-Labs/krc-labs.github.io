@@ -714,8 +714,50 @@
   color: var(--accent);
 }
 
-.custom-window.is-dragging .custom-window-titlebar {
-  cursor: grabbing;
+/* ─── Window Drag & Cursor Ergonomics ─── */
+.custom-window-body {
+  cursor: grab;
+}
+
+.custom-window-desc,
+.design-engine-header,
+.custom-preview-box,
+.help-guide-header,
+.help-guide-card {
+  cursor: grab;
+  user-select: none;
+}
+
+.custom-preview-box:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Ensure interactive elements inside window have appropriate interactive cursors */
+.custom-window button,
+.custom-window input,
+.custom-window select,
+.custom-window textarea,
+.custom-window a,
+.custom-window [role="button"],
+.custom-window [role="tab"],
+.custom-window .browser-tab,
+.custom-window .custom-preset-btn,
+.custom-window .density-btn,
+.custom-window .btn,
+.custom-window .color-input-wrapper,
+.custom-window label[for] {
+  cursor: pointer;
+}
+
+.custom-window input[type="text"] {
+  cursor: text;
+}
+
+/* While dragging anywhere on window, lock cursor to grabbing */
+.custom-window.is-dragging,
+.custom-window.is-dragging * {
+  cursor: grabbing !important;
+  user-select: none !important;
 }
 
 .custom-window-title-group {
