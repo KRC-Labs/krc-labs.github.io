@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Blog — KRC Labs Systems Architecture &amp; Runtimes</title>
+  
+  <!-- Synchronous F5 Theme Hydration Guard (Zero Flash / System Baseline) -->
+  <script>
+    (function() {
+      try {
+        var stored = localStorage.getItem('krc_theme_pref');
+        var theme = stored || 'system';
+        var effective = theme;
+        if (theme === 'system') {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          effective = isDark ? 'dark' : 'sage';
+        } else if (theme === 'custom') {
+          effective = 'custom';
+          var customRaw = localStorage.getItem('krc_custom_theme');
+          if (customRaw) {
+            var p = JSON.parse(customRaw);
+            var root = document.documentElement;
+            if (p.bg) root.style.setProperty('--bg', p.bg);
+            if (p.surface) root.style.setProperty('--surface', p.surface);
+            if (p.surfaceAlt) root.style.setProperty('--surface-alt', p.surfaceAlt);
+            if (p.border) root.style.setProperty('--border', p.border);
+            if (p.accent) {
+              root.style.setProperty('--accent', p.accent);
+              root.style.setProperty('--accent-hover', p.accent);
+              root.style.setProperty('--accent-bg', p.accent + '22');
+              root.style.setProperty('--accent-border', p.accent + '44');
+            }
+            if (p.textPrimary) root.style.setProperty('--text-primary', p.textPrimary);
+          }
+        }
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-pref', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta name="description" content="Technical engineering articles, architecture breakdowns, and kernel runtime releases from KRC Labs.">
+  <link rel="icon" type="image/png" href="../assets/avatar.png">
+
+  <!-- Feeds & Discovery -->
+  <link rel="alternate" type="application/rss+xml" title="KRC Labs — Global Feed" href="../feed.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ko" title="KRC Labs RSS 피드 (한국어)" href="../feed.ko.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="en" title="KRC Labs RSS Feed (English)" href="../feed.en.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ja" title="KRC Labs RSSフィード (日本語)" href="../feed.ja.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="zh" title="KRC Labs RSS订阅源 (简体中文)" href="../feed.zh.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="de" title="KRC Labs RSS-Feed (Deutsch)" href="../feed.de.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="fr" title="Flux RSS KRC Labs (Français)" href="../feed.fr.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="es" title="Canal RSS de KRC Labs (Español)" href="../feed.es.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ru" title="RSS-лента KRC Labs (Русский)" href="../feed.ru.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="hi" title="KRC Labs RSS फ़ीड (हिन्दी)" href="../feed.hi.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="pt" title="Feed RSS KRC Labs (Português)" href="../feed.pt.xml">
+
+  <!-- Modular Stylesheets (Relative paths for GitHub Pages & Local Server) -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    .blog-header {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 36px;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .article-card:hover {
+      border-color: var(--border-active);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--accent-bg);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+    .article-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .article-summary {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .article-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="../" class="brand" title="Back to KRC Labs Showcase">
+        <img src="../assets/avatar.png" alt="KRC Labs Avatar" class="brand-avatar">
+        <span class="brand-title">KRC Labs</span>
+        <span class="badge badge-node1">Engineering Blog</span>
+      </a>
+
+      <div class="nav-controls">
+        <nav class="nav-links">
+          <a href="../" class="nav-link">← Showcase</a>
+          <a href="../docs/" class="nav-link">Documentation</a>
+          <a href="../#faq" class="nav-link">FAQ</a>
+          <a href="../feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="nav-link nav-link-rss" title="RSS Feed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align:-1px; margin-right:3px;"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            <span>RSS</span>
+          </a>
+        </nav>
+
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer" class="btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="blog-header">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <span class="badge badge-node2">Systems Engineering</span>
+        <span class="text-xs text-muted">Technical Publications &amp; Releases</span>
+      </div>
+      <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">KRC Labs Engineering Blog</h1>
+      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 720px; line-height: 1.5;">
+        Architecture notes, kernel execution papers, and high-assurance runtime releases from the KRC Systems Architecture Group.
+      </p>
+    </div>
+
+    <div class="blog-grid">
+      <!-- Article 1: Zero-Copy Packet Engine -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Kernel &amp; Network</span>
+          <span>October 24, 2026</span>
+          <span>•</span>
+          <span>6 min read</span>
+        </div>
+        <h2 class="article-title">Zero-Copy Packet Engine v2.4.0: Bypassing Kernel Buffers with DPDK and eBPF Ring Buffers</h2>
+        <p class="article-summary">
+          A deep dive into how KRC Labs achieved deterministic sub-microsecond packet ingestion by eliminating OS socket overhead, mapping DMA memory directly into user-space rings, and enforcing cache-line aligned zero-copy pipelines in modern C++23.
+        </p>
+        <div class="article-footer">
+          <span>Author: Lead Kernel Systems Architect</span>
+          <span style="color:var(--accent); font-weight:600;">System Release v2.4.0</span>
+        </div>
+      </article>
+
+      <!-- Article 2: Binary Forensics Disassembler -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Reverse Engineering</span>
+          <span>October 18, 2026</span>
+          <span>•</span>
+          <span>8 min read</span>
+        </div>
+        <h2 class="article-title">Binary Forensics &amp; Native Decompilation: Seamless Protocol Bridges for x64dbg and IDA Pro MCP</h2>
+        <p class="article-summary">
+          How our native forensics runtime instruments x86/x64 execution threads, analyzes call graphs in headless environments, and synchronizes memory patch dumps across multi-node analysis clusters without performance degradation.
+        </p>
+        <div class="article-footer">
+          <span>Author: Security Forensics Team</span>
+          <span style="color:var(--accent); font-weight:600;">Security Protocol</span>
+        </div>
+      </article>
+
+      <!-- Article 3: DPAPI Hardware Vault -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Security &amp; Vault</span>
+          <span>October 12, 2026</span>
+          <span>•</span>
+          <span>5 min read</span>
+        </div>
+        <h2 class="article-title">Hardware-Isolated Enclave Security: Protecting Enterprise Credentials via Windows DPAPI &amp; CNG</h2>
+        <p class="article-summary">
+          Architectural breakdown of our hardware-bound credential vault. All private keys and authentication secrets are strictly encrypted using machine-specific TPM chips and Cryptography Next Generation (CNG) primitives, guaranteeing zero plaintext leaks in memory.
+        </p>
+        <div class="article-footer">
+          <span>Author: Cryptographic Systems Lead</span>
+          <span style="color:var(--accent); font-weight:600;">Hardware DPAPI</span>
+        </div>
+      </article>
+
+      <!-- Article 4: Deterministic MCP Runtimes -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Distributed Nodes</span>
+          <span>October 05, 2026</span>
+          <span>•</span>
+          <span>7 min read</span>
+        </div>
+        <h2 class="article-title">Multi-Node Cluster State Synchronization: Designing Deterministic Microservice Execution Runtimes</h2>
+        <p class="article-summary">
+          Managing 10 independent system personas across isolated virtualized nodes (Node 1 &amp; Node 2) with real-time heartbeat telemetry, zero-allocation serialization, and automated failover recovery mechanisms.
+        </p>
+        <div class="article-footer">
+          <span>Author: Distributed Systems Group</span>
+          <span style="color:var(--accent); font-weight:600;">Cluster Telemetry</span>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div>
+        KRC Labs — KRC Research Institute
+      </div>
+      <div class="footer-links">
+        <a href="../" title="Back to Showcase">← Showcase</a>
+        <a href="../docs/" title="Documentation">Documentation</a>
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer">GitHub Organization</a>
+        <a href="mailto:jo06023535@gmail.com">Security Contact</a>
+        <span>Seoul, South Korea</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

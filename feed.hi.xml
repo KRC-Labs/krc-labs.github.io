@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — सिस्टम आर्किटेक्चर और उच्च-आश्वासन रनटाइम</title>
+    <link>https://krc-labs.github.io/?lang=hi</link>
+    <description>उच्च-आश्वासन कर्नेल पैकेट इंजन, बाइनरी डिसेम्बलर और Windows DPAPI सुरक्षा वॉल्ट के लिए तकनीकी रिलीज़ लॉग।</description>
+    <language>hi-IN</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.hi.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (hi)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 जारी: माइक्रो-वीएम अलगाव और सैंडबॉक्स सत्यापन गेट</title>
+      <link>https://krc-labs.github.io/?lang=hi#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-hi</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>नोड 1 (10.0.1.30) पर माइक्रो-वीएम अलगाव और सैंडबॉक्स सत्यापन गेट तैनात करता है। बाइनरी फ़ज़िंग और पैच संश्लेषण के लिए Linux KVM Firecracker और gVisor को एकीकृत करता है।</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 जारी: मेमोरी लीक हीप स्नैपशॉट प्रोफाइलर और रिटेनर ट्री इंजन</title>
+      <link>https://krc-labs.github.io/?lang=hi#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-hi</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>नोड 1 (10.0.1.30) पर उच्च-थ्रूपुट V8 और Chromium हीप स्नैपशॉट प्रोफाइलर प्रस्तुत करता है। Windows DPAPI हार्डवेयर अलगाव द्वारा सुरक्षित।</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 पूर्ण: RFC 9000 और RFC 9001 QUIC कनेक्शन माइग्रेशन सिम्युलेटर</title>
+      <link>https://krc-labs.github.io/?lang=hi#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-hi</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>नोड 1 (10.0.1.30) पर C++23 में पूर्ण RFC 9000 और RFC 9001 QUIC कनेक्शन माइग्रेशन सिमुलेशन को पूरा करता है।</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 जारी: DPAPI अलग एंटी-डिटेक्शन हेडलेस क्रोमियम सीडीपी ब्रिज</title>
+      <link>https://krc-labs.github.io/?lang=hi#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-hi</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>नोड 2 (10.0.1.31) पर रस्ट-आधारित एंटी-डिटेक्शन हेडलेस क्रोमियम सीडीपी ब्रिज प्रदान करता है। DPAPI-एन्क्रिप्टेड क्रेडेंशियल स्टोर के साथ।</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 जारी: रस्ट PE/ELF कंट्रोल फ्लो ग्राफ (CFG) पुनर्निर्माण और Ghidra ब्रिज</title>
+      <link>https://krc-labs.github.io/?lang=hi#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-hi</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>नोड 1 (10.0.1.30) पर बाइनरी डिससेप्शन फ्रेमवर्क को बढ़ाता है। Ghidra हेडलेस ब्रिज के साथ कंट्रोल फ्लो ग्राफ का पुनर्निर्माण करता है।</description>
+    </item>
+  </channel>
+</rss>

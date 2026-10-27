@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — 系统架构与高可靠运行时</title>
+    <link>https://krc-labs.github.io/?lang=zh</link>
+    <description>高可靠内核报文处理引擎、二进制逆向反汇编器、Windows DPAPI硬件保险库技术发布与版本更新记录。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.zh.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (zh)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 发布：微虚机隔离与临时沙箱证明门禁 (Firecracker &amp; gVisor)</title>
+      <link>https://krc-labs.github.io/?lang=zh#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-zh</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>在节点 1 (10.0.1.30) 上部署微虚机隔离与临时沙箱证明门禁。整合 Linux KVM Firecracker 微虚机与 gVisor 用户态内核容器化，为二进制模糊测试与补丁合成提供隔离执行环境，支持加密运行时证明与零残留状态销毁。</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 发布：内存泄漏堆快照分析器与保持树引擎</title>
+      <link>https://krc-labs.github.io/?lang=zh#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-zh</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>在节点 1 (10.0.1.30) 上引入高性能 V8 与 Chromium 堆快照分析器及保持树分析引擎。自动构建支配树并追踪引用链，精准定位游离 DOM 树与孤立缓冲区，所有数据均受 Windows DPAPI 硬件级隔离保护。</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 里程碑完成：RFC 9000与9001 QUIC连接迁移模拟器与混沌故障注入器</title>
+      <link>https://krc-labs.github.io/?lang=zh#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-zh</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>在节点 1 (10.0.1.30) 上基于 C++23 完成符合 RFC 9000 和 RFC 9001 的 QUIC 连接迁移模拟与网络混沌故障注入。严格验证多网卡容灾切换、加密 CID 轮换及乱序报文重组，无缝集成零拷贝 PCAP 引擎与 eBPF 过滤链。</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 发布：DPAPI硬件隔离防指纹无头Chromium CDP代理桥</title>
+      <link>https://krc-labs.github.io/?lang=zh#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-zh</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>在节点 2 (10.0.1.31) 上发布基于 Rust 的防检测无头 Chromium CDP 代理桥。标准化 WebGL、Canvas 及音频指纹，实现 DevTools 协议会话代理，强制执行零僵尸进程生命周期钩子与 DPAPI 加密凭据库。</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 发布：基于Rust的PE/ELF控制流图(CFG)重构与Ghidra桥接</title>
+      <link>https://krc-labs.github.io/?lang=zh#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-zh</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>在节点 1 (10.0.1.30) 上升级二进制反汇编框架。深入逆向分析 x86_64 与 ARM64 指令，提取基本块与跳转分支以重构动态控制流图，支持与 Ghidra 无头分析器的双向桥接联动。</description>
+    </item>
+  </channel>
+</rss>

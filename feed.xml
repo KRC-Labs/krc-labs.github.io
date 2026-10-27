@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — Systems Architecture &amp; High-Assurance Runtimes</title>
+    <link>https://krc-labs.github.io/?lang=en</link>
+    <description>Technical changelog and milestone releases for high-assurance kernel, binary, and MCP runtimes.</description>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.en.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (en)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 Released: Automated Micro-VM Isolation &amp; Ephemeral Sandbox Attestation Gate</title>
+      <link>https://krc-labs.github.io/?lang=en#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-en</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>Deploys automated Micro-VM isolation and ephemeral sandbox attestation gates on Node 1 (10.0.1.30). Integrates Linux KVM Firecracker micro-VMs and gVisor user-space kernel containment for binary fuzzing and patch synthesis with cryptographic runtime attestation gates and zero-residual state teardown.</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 Released: Memory Leak Heap Snapshot Profiler &amp; Retainer Tree Engine</title>
+      <link>https://krc-labs.github.io/?lang=en#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-en</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>Introduces a high-throughput V8 and Chromium heap snapshot profiler and retainer tree analysis engine on Node 1 (10.0.1.30). Automatically constructs dominator trees and traces reference paths to pinpoint detached DOM trees and orphaned buffers, protected by Windows DPAPI hardware-level isolation.</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 Completed: RFC 9000 &amp; RFC 9001 QUIC Connection Migration Simulator &amp; Chaos Injector</title>
+      <link>https://krc-labs.github.io/?lang=en#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-en</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>Completes full RFC 9000 and RFC 9001 QUIC connection migration simulation and network chaos injection in C++23 on Node 1 (10.0.1.30). Validates failovers, cryptographic CID rotation, and packet reassembly via zero-copy PCAP engines and eBPF filters.</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 Released: DPAPI Isolated Anti-Detection Headless Chromium CDP Bridge</title>
+      <link>https://krc-labs.github.io/?lang=en#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-en</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>Delivers a Rust-native anti-detection headless Chromium CDP bridge on Node 2 (10.0.1.31). Normalizes browser fingerprints across WebGL, Canvas, and audio contexts, enforcing zero-zombie process lifecycle hooks and DPAPI-encrypted credential stores.</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 Released: Rust PE/ELF Control Flow Graph (CFG) Reconstruction &amp; Ghidra Bridge</title>
+      <link>https://krc-labs.github.io/?lang=en#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-en</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>Enhances binary disassembly framework on Node 1 (10.0.1.30). Analyzes x86_64 and ARM64 instructions to extract basic blocks, reconstructing dynamic control flow graphs with bidirectional Ghidra headless bridge integration.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — システムアーキテクチャ＆高信頼性ランタイム</title>
+    <link>https://krc-labs.github.io/?lang=ja</link>
+    <description>高信頼カーネルパケットエンジン、バイナリ逆アセンブラ、Windows DPAPI暗号金庫の技術リリースおよび更新履歴。</description>
+    <language>ja-JP</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.ja.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (ja)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 リリース：マイクロVM分離およびエフェメラルサンドボックス証明ゲート</title>
+      <link>https://krc-labs.github.io/?lang=ja#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-ja</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>ノード1（10.0.1.30）にマイクロVM分離およびエフェメラルサンドボックス証明ゲートを配備しました。Linux KVM FirecrackerマイクロVMとgVisorユーザ空間カーネル分離を統合し、バイナリファジングおよびパッチ合成のための完全隔離環境を提供します。暗号学的ランタイム証明と残存状態ゼロの破棄を保証します。</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 リリース：メモリリーク ヒープスナップショットプロファイラおよびリテーナツリーエンジン</title>
+      <link>https://krc-labs.github.io/?lang=ja#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-ja</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>ノード1（10.0.1.30）に高スループットV8およびChromiumヒープスナップショットプロファイラを導入。ドミネータツリーを自動構築し参照パスを追跡して分離DOMツリーや孤立バッファを特定します。全データはWindows DPAPIハードウェア隔離で保護されます。</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 完了：RFC 9000 &amp; 9001 QUICコネクションマイグレーションシミュレータ＆カオスインジェクタ</title>
+      <link>https://krc-labs.github.io/?lang=ja#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-ja</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>ノード1（10.0.1.30）にてC++23によるRFC 9000/9001 QUICコネクションマイグレーションシミュレーションを完了。マルチインターフェースフェイルオーバーや暗号化CIDローテーションをゼロコピーPCAPエンジンとeBPFで検証します。</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 リリース：DPAPIハードウェア隔離アンチディテクト ヘッドレスChromium CDPブリッジ</title>
+      <link>https://krc-labs.github.io/?lang=ja#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-ja</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>ノード2（10.0.1.31）にRustネイティブのアンチディテクト ヘッドレスChromium CDPブリッジを構築。WebGLやCanvasのフィンガープリントを正規化し、ゾンビプロセス防止フックとDPAPI暗号化資格情報ストアを強制します。</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 リリース：RustによるPE/ELF制御フローグラフ（CFG）再構築およびGhidraブリッジ</title>
+      <link>https://krc-labs.github.io/?lang=ja#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-ja</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>ノード1（10.0.1.30）でバイナリ逆アセンブラを高度化。x86_64/ARM64命令を解析して基本ブロックを抽出し、Ghidraヘッドレスブリッジと連携する制御フローグラフを再構築します。</description>
+    </item>
+  </channel>
+</rss>

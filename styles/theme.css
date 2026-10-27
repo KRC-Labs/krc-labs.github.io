@@ -1,0 +1,265 @@
+/**
+ * KRC Labs — Scientific Low Eye-Fatigue Multi-Theme Engine
+ * Engineered for minimal chromatic aberration, low pupil dilation stress, and crisp legibility.
+ * Order: 1) 다크 (Dark), 2) 포레스트 (Forest), 3) 연초록 (Sage), 4) 페이퍼 (Paper), 5) 커스텀 (Custom), 6) 시스템 (System)
+ */
+
+/* ─── 1. [Theme: Dark] Default Charcoal Slate (대비 강조 고신뢰 야간 모드) ─── */
+:root {
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-scale: 1;
+  --radius-ui: 6px;
+  --window-blur: 18px;
+  --density-scale: 1;
+}
+
+:root, [data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(88, 166, 255, 0.05) 0%, transparent 60%);
+  --surface: #161b22;
+  --surface-alt: #21262d;
+  --surface-inset: #090d13;
+  --border: #30363d;
+  --border-subtle: #21262d;
+  --border-active: #58a6ff;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-tertiary: #6e7681;
+  --accent: #58a6ff;
+  --accent-hover: #79b8ff;
+  --accent-bg: rgba(88, 166, 255, 0.1);
+  --accent-border: rgba(88, 166, 255, 0.25);
+  --green: #3fb950;
+  --green-bg: rgba(63, 185, 80, 0.12);
+  --amber: #d29922;
+  --purple: #bc8cff;
+  --code-bg: #090d13;
+  --code-text: #e6edf3;
+  --badge-bg: #21262d;
+  --badge-text: #8b949e;
+  --header-bg: rgba(13, 17, 23, 0.88);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* ─── 2. [Theme: Forest] Midnight Forest / Deep Pine (눈 피로 저감 딥 그린 야간 모드) ─── */
+[data-theme="forest"] {
+  --bg: #09130c;
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(74, 222, 128, 0.05) 0%, transparent 60%);
+  --surface: #101e13;
+  --surface-alt: #172a1c;
+  --surface-inset: #050b07;
+  --border: #1f3b27;
+  --border-subtle: #15271a;
+  --border-active: #4ade80;
+  --text-primary: #e2ede5;
+  --text-secondary: #8ea896;
+  --text-tertiary: #607967;
+  --accent: #4ade80;
+  --accent-hover: #86efac;
+  --accent-bg: rgba(74, 222, 128, 0.1);
+  --accent-border: rgba(74, 222, 128, 0.25);
+  --green: #4ade80;
+  --green-bg: rgba(74, 222, 128, 0.12);
+  --amber: #facc15;
+  --purple: #c084fc;
+  --code-bg: #050b07;
+  --code-text: #e2ede5;
+  --badge-bg: #172a1c;
+  --badge-text: #8ea896;
+  --header-bg: rgba(9, 19, 12, 0.88);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.36);
+}
+
+/* ─── 3. [Theme: Sage] Soft Pale Green / Matte Paper (눈 피로 저감 주간 모드) ─── */
+[data-theme="sage"] {
+  --bg: #f4f7f4;
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(35, 104, 63, 0.05) 0%, transparent 60%);
+  --surface: #ffffff;
+  --surface-alt: #eaf0ea;
+  --surface-inset: #dce5dc;
+  --border: #ccd8cc;
+  --border-subtle: #dbe4db;
+  --border-active: #23683f;
+  --text-primary: #15271b;
+  --text-secondary: #3f5545;
+  --text-tertiary: #657b6b;
+  --accent: #23683f;
+  --accent-hover: #1b5332;
+  --accent-bg: rgba(35, 104, 63, 0.08);
+  --accent-border: rgba(35, 104, 63, 0.25);
+  --green: #1f7a3f;
+  --green-bg: rgba(31, 122, 63, 0.1);
+  --amber: #9a6700;
+  --purple: #6e40c9;
+  --code-bg: #16241a;
+  --code-text: #e1ede4;
+  --badge-bg: #e6eee6;
+  --badge-text: #23683f;
+  --header-bg: rgba(244, 247, 244, 0.9);
+  --card-shadow: 0 1px 3px rgba(21, 39, 27, 0.05), 0 1px 2px rgba(21, 39, 27, 0.03);
+}
+
+/* ─── 4. [Theme: Paper] Warm E-Ink Sepia Paper (블루라이트 차단 모드) ─── */
+[data-theme="paper"] {
+  --bg: #f8f5ee;
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(140, 86, 32, 0.04) 0%, transparent 60%);
+  --surface: #ffffff;
+  --surface-alt: #eee8dc;
+  --surface-inset: #e2dac9;
+  --border: #ddd4c2;
+  --border-subtle: #e8e2d4;
+  --border-active: #8c5620;
+  --text-primary: #29221a;
+  --text-secondary: #574d41;
+  --text-tertiary: #7d7162;
+  --accent: #8c5620;
+  --accent-hover: #6e4216;
+  --accent-bg: rgba(140, 86, 32, 0.08);
+  --accent-border: rgba(140, 86, 32, 0.25);
+  --green: #23683f;
+  --green-bg: rgba(35, 104, 63, 0.08);
+  --amber: #9a6700;
+  --purple: #6e40c9;
+  --code-bg: #27211a;
+  --code-text: #f0ebe1;
+  --badge-bg: #eee8dc;
+  --badge-text: #574d41;
+  --header-bg: rgba(248, 245, 238, 0.9);
+  --card-shadow: 0 1px 3px rgba(41, 34, 26, 0.05), 0 1px 2px rgba(41, 34, 26, 0.03);
+}
+
+/* ─── 5. [Theme: Custom] User-Defined Palette (사용자 커스텀 스튜디오 모드) ─── */
+[data-theme="custom"] {
+  --bg: #14171f;
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.06) 0%, transparent 60%);
+  --surface: #1d222d;
+  --surface-alt: #272e3d;
+  --surface-inset: #0e1117;
+  --border: #384256;
+  --border-subtle: #272e3d;
+  --border-active: #8b5cf6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-bg: rgba(139, 92, 246, 0.12);
+  --accent-border: rgba(139, 92, 246, 0.28);
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.12);
+  --amber: #f59e0b;
+  --purple: #8b5cf6;
+  --code-bg: #0e1117;
+  --code-text: #f1f5f9;
+  --badge-bg: #272e3d;
+  --badge-text: #94a3b8;
+  --header-bg: rgba(20, 23, 31, 0.88);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Ultra-Smooth, Eye-Comfort Theme Animation Engine ─── */
+:root {
+  --theme-transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body,
+header,
+footer,
+.system-card,
+.btn,
+.telemetry-bar,
+.console-box,
+.dropdown-menu,
+.dropdown-trigger,
+.badge,
+.tab-pill,
+.search-box,
+.custom-modal-content {
+  transition: var(--theme-transition);
+}
+
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important,
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important,
+              color 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important,
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition-delay: 0s !important;
+}
+
+/* Native View Transitions API cross-fade blend */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Modern Custom High-End Scrollbar Engine ─── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-active) transparent;
+}
+
+/* WebKit & Blink Browsers (Chrome, Edge, Safari, Brave, Whale, Arc) */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Floating Window Scrollbars */
+.custom-window-body,
+.help-window-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-active) rgba(0, 0, 0, 0.12);
+}
+
+.custom-window-body::-webkit-scrollbar,
+.help-window-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-window-body::-webkit-scrollbar-track,
+.help-window-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  margin: 6px 0;
+}
+
+.custom-window-body::-webkit-scrollbar-thumb,
+.help-window-body::-webkit-scrollbar-thumb {
+  background: var(--border-active);
+  border-radius: 999px;
+}
+
+.custom-window-body::-webkit-scrollbar-thumb:hover,
+.help-window-body::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+

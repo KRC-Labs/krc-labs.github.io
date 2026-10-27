@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — Systemarchitektur &amp; Hochsichere Runtimes</title>
+    <link>https://krc-labs.github.io/?lang=de</link>
+    <description>Technisches Changelog und Meilenstein-Releases für hochsichere Kernel-, Binär- und MCP-Runtimes.</description>
+    <language>de-DE</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.de.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (de)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 veröffentlicht: Automatisierte Micro-VM-Isolation &amp; Sandkasten-Bescheinigung</title>
+      <link>https://krc-labs.github.io/?lang=de#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-de</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>Stellt Micro-VM-Isolation und Sandkasten-Bescheinigungsgates auf Node 1 (10.0.1.30) bereit. Integriert Linux KVM Firecracker und gVisor für isoliertes Binär-Fuzzing mit kryptografischer Laufzeitbescheinigung und zustandsloser Bereinigung.</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 veröffentlicht: Heap-Snapshot-Profiler &amp; Retainer-Tree-Engine für Speicherlecks</title>
+      <link>https://krc-labs.github.io/?lang=de#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-de</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>Führt Heap-Snapshot-Profiler und Retainer-Tree-Analysen auf Node 1 (10.0.1.30) ein. Ermittelt Speicherlecks durch Dominator-Trees, geschützt durch Windows DPAPI Hardware-Isolation.</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 abgeschlossen: RFC 9000 &amp; 9001 QUIC-Verbindungsmigrations-Simulator &amp; Chaos-Injektor</title>
+      <link>https://krc-labs.github.io/?lang=de#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-de</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>Schließt vollständige QUIC-Verbindungsmigrationssimulation (RFC 9000/9001) in C++23 auf Node 1 ab. Validiert IP/Port-Failover und eBPF-Filterung mit Zero-Copy-PCAP-Engines.</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 veröffentlicht: DPAPI-isolierte Anti-Detection Headless-Chromium-CDP-Brücke</title>
+      <link>https://krc-labs.github.io/?lang=de#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-de</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>Liefert Rust-native Anti-Detection Headless-Chromium-CDP-Brücke auf Node 2. Normalisiert WebGL- und Canvas-Fingerabdrücke mit DPAPI-verschlüsselten Anmeldedaten.</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 veröffentlicht: Rust PE/ELF Kontrollflussgraphen (CFG) Rekonstruktion &amp; Ghidra-Brücke</title>
+      <link>https://krc-labs.github.io/?lang=de#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-de</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>Erweitert das Binär-Disassembler-Framework auf Node 1. Analysiert x86_64/ARM64 zur Rekonstruktion dynamischer Kontrollflussgraphen mit bidirektionaler Ghidra-Brücke.</description>
+    </item>
+  </channel>
+</rss>

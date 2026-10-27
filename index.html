@@ -1,738 +1,731 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KRC Labs — Systems Architecture & High-Assurance Runtimes</title>
-  <meta name="description" content="Distributed research laboratory building zero-driver packet engines, binary forensics, micro-VM attestation, and deterministic MCP runtimes.">
+  
+  <!-- Synchronous F5 Theme Hydration Guard (Zero Flash / System Baseline) -->
+  <script>
+    (function() {
+      try {
+        var stored = localStorage.getItem('krc_theme_pref');
+        var theme = stored || 'system';
+        var effective = theme;
+        if (theme === 'system') {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          effective = isDark ? 'dark' : 'sage';
+        } else if (theme === 'custom') {
+          effective = 'custom';
+          var customRaw = localStorage.getItem('krc_custom_theme');
+          if (customRaw) {
+            var p = JSON.parse(customRaw);
+            var root = document.documentElement;
+            if (p.bg) root.style.setProperty('--bg', p.bg);
+            if (p.surface) root.style.setProperty('--surface', p.surface);
+            if (p.surfaceAlt) root.style.setProperty('--surface-alt', p.surfaceAlt);
+            if (p.border) root.style.setProperty('--border', p.border);
+            if (p.accent) {
+              root.style.setProperty('--accent', p.accent);
+              root.style.setProperty('--accent-hover', p.accent);
+              root.style.setProperty('--accent-bg', p.accent + '22');
+              root.style.setProperty('--accent-border', p.accent + '44');
+            }
+            if (p.textPrimary) root.style.setProperty('--text-primary', p.textPrimary);
+          }
+        }
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-pref', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta name="description" content="Distributed research laboratory building zero-copy packet engines, binary forensics, DPAPI credential vaults, and deterministic MCP runtimes.">
   <link rel="icon" type="image/png" href="assets/avatar.png">
-  
-  <!-- Modern Inter & JetBrains Mono fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg: #090a0f;
-      --surface-1: #0e111a;
-      --surface-2: #141824;
-      --surface-3: #1c2233;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(56, 189, 248, 0.35);
-      --border-subtle: rgba(255, 255, 255, 0.04);
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-subtle: #64748b;
-      --accent: #38bdf8;
-      --accent-muted: rgba(56, 189, 248, 0.12);
-      --mint: #34d399;
-      --purple: #c084fc;
-      --amber: #fbbf24;
-      --rose: #fb7185;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'Geist Mono', 'Fira Code', monospace;
-    }
+  <link rel="canonical" href="https://krc-labs.github.io/">
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      position: relative;
-    }
+  <!-- 10-Language Alternates & Index Mapping (SEO) -->
+  <link rel="alternate" hreflang="x-default" href="https://krc-labs.github.io/">
+  <link rel="alternate" hreflang="en" href="https://krc-labs.github.io/?lang=en">
+  <link rel="alternate" hreflang="ko" href="https://krc-labs.github.io/?lang=ko">
+  <link rel="alternate" hreflang="ja" href="https://krc-labs.github.io/?lang=ja">
+  <link rel="alternate" hreflang="zh" href="https://krc-labs.github.io/?lang=zh">
+  <link rel="alternate" hreflang="de" href="https://krc-labs.github.io/?lang=de">
+  <link rel="alternate" hreflang="fr" href="https://krc-labs.github.io/?lang=fr">
+  <link rel="alternate" hreflang="es" href="https://krc-labs.github.io/?lang=es">
+  <link rel="alternate" hreflang="ru" href="https://krc-labs.github.io/?lang=ru">
+  <link rel="alternate" hreflang="hi" href="https://krc-labs.github.io/?lang=hi">
+  <link rel="alternate" hreflang="pt" href="https://krc-labs.github.io/?lang=pt">
 
-    /* Subdued architectural grid background (Linear/Vercel style, not generic neon) */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.06) 0%, transparent 60%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 48px 48px, 48px 48px;
-      pointer-events: none;
-      z-index: 0;
-    }
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:title" content="KRC Labs — Systems Architecture &amp; High-Assurance Runtimes">
+  <meta property="og:description" content="Distributed systems research laboratory building zero-copy packet engines, binary forensics, and hardware DPAPI credential vaults.">
+  <meta property="og:image" content="https://krc-labs.github.io/assets/avatar.png">
+  <meta property="og:url" content="https://krc-labs.github.io/">
+  <meta name="twitter:card" content="summary">
 
-    .wrapper {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
+  <!-- Feeds & Discovery (10-Language 1:1 Parity Autodiscovery) -->
+  <link rel="alternate" type="application/rss+xml" title="KRC Labs — Global Feed" href="feed.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ko" title="KRC Labs RSS 피드 (한국어)" href="feed.ko.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="en" title="KRC Labs RSS Feed (English)" href="feed.en.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ja" title="KRC Labs RSSフィード (日本語)" href="feed.ja.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="zh" title="KRC Labs RSS订阅源 (简体中文)" href="feed.zh.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="de" title="KRC Labs RSS-Feed (Deutsch)" href="feed.de.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="fr" title="Flux RSS KRC Labs (Français)" href="feed.fr.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="es" title="Canal RSS de KRC Labs (Español)" href="feed.es.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ru" title="RSS-лента KRC Labs (Русский)" href="feed.ru.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="hi" title="KRC Labs RSS फ़ीड (हिन्दी)" href="feed.hi.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="pt" title="Feed RSS KRC Labs (Português)" href="feed.pt.xml">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
 
-    /* ─── Top Navbar ─── */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      background: rgba(9, 10, 15, 0.75);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      height: 64px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .brand-mark {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-main);
-    }
-    .brand-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: var(--surface-1);
-    }
-    .brand-text {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: -0.3px;
-    }
-    .brand-tag {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: var(--surface-2);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      transition: color 0.15s ease;
-    }
-    .nav-link:hover { color: var(--text-main); }
-    .gh-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-    .gh-btn:hover {
-      background: var(--surface-3);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    /* ─── Hero Section ─── */
-    .hero {
-      padding: 84px 0 64px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent);
-      background: var(--accent-muted);
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      margin-bottom: 24px;
-    }
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 8px var(--mint);
-    }
-    .hero h1 {
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      max-width: 960px;
-      margin-bottom: 24px;
-      color: #fff;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 680px;
-      line-height: 1.6;
-      margin-bottom: 36px;
-    }
-    
-    /* Interactive Terminal Command Box */
-    .cli-bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--surface-1);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 16px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .cli-prefix { color: var(--accent); font-weight: 600; }
-    .cli-cmd { color: var(--text-main); }
-    .cli-copy {
-      background: transparent;
-      border: none;
-      color: var(--text-subtle);
-      cursor: pointer;
-      font-size: 0.78rem;
-      padding: 3px 8px;
-      border-radius: 4px;
-      transition: all 0.15s ease;
-    }
-    .cli-copy:hover {
-      background: var(--surface-3);
-      color: var(--text-main);
-    }
-
-    /* ─── Bento Grid Architecture ─── */
-    .bento-section {
-      padding: 48px 0 96px;
-    }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 28px;
-    }
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .section-sub {
-      color: var(--text-subtle);
-      font-size: 0.9rem;
-      margin-top: 4px;
-    }
-    
-    /* Category Filter Tabs */
-    .filter-tabs {
-      display: flex;
-      gap: 6px;
-      background: var(--surface-1);
-      padding: 4px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .tab-btn.active, .tab-btn:hover {
-      background: var(--surface-2);
-      color: var(--text-main);
-    }
-
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-    }
-
-    /* Bento Card Base with Spotlight Hover */
-    .bento-card {
-      background: var(--surface-1);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .bento-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-2px);
-    }
-
-    /* Card Spans */
-    .col-span-8 { grid-column: span 8; }
-    .col-span-4 { grid-column: span 4; }
-    .col-span-6 { grid-column: span 6; }
-    .col-span-12 { grid-column: span 12; }
-
-    /* Terminal Preview Inside Card */
-    .terminal-mock {
-      background: #05070a;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: #94a3b8;
-      margin-top: 16px;
-      overflow-x: auto;
-    }
-    .term-line { margin-bottom: 6px; white-space: nowrap; }
-    .term-hl { color: var(--mint); }
-    .term-blue { color: var(--accent); }
-    .term-sub { color: #475569; }
-
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-    .card-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: #fff;
-    }
-    .card-tag {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      background: var(--surface-2);
-    }
-    .card-tag.mint { color: var(--mint); border-color: rgba(52, 211, 153, 0.25); background: rgba(52, 211, 153, 0.08); }
-    .card-tag.cyan { color: var(--accent); border-color: rgba(56, 189, 248, 0.25); background: rgba(56, 189, 248, 0.08); }
-    .card-tag.purple { color: var(--purple); border-color: rgba(192, 132, 252, 0.25); background: rgba(192, 132, 252, 0.08); }
-
-    .card-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 16px;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 14px;
-      border-top: 1px solid var(--border-subtle);
-    }
-    .pill-group {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .pill {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-subtle);
-      background: var(--surface-2);
-      padding: 2px 7px;
-      border-radius: 4px;
-    }
-    .lead-author {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    /* ─── Cluster Node Status Bar ─── */
-    .cluster-status {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-top: 16px;
-    }
-    .node-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-    }
-    .node-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
-
-    /* ─── Footer ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 48px 0;
-      color: var(--text-subtle);
-      font-size: 0.85rem;
-    }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-    .footer-links a:hover { color: var(--accent); }
-
-    @media (max-width: 980px) {
-      .col-span-8, .col-span-4, .col-span-6 { grid-column: span 12; }
-      .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .nav-links { display: none; }
-    }
-  </style>
+  <!-- Modular Stylesheets (Separated CSS) -->
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="grid-bg"></div>
 
+  <!-- Navigation Bar -->
   <header>
-    <div class="wrapper">
-      <div class="nav-inner">
-        <a href="/" class="brand-mark">
-          <img src="assets/avatar.png" alt="KRC Labs" class="brand-avatar">
-          <span class="brand-text">KRC Labs</span>
-          <span class="brand-tag">core/v2.4</span>
-        </a>
-        <div class="nav-actions">
-          <a href="#architecture" class="nav-link">Architecture</a>
-          <a href="#engines" class="nav-link">Engines (10)</a>
-          <a href="#cluster" class="nav-link">Cluster</a>
-          <a href="https://github.com/KRC-Labs" target="_blank" class="gh-btn">
-            <span>github.com/KRC-Labs</span>
-            <span style="color: var(--text-subtle);">↗</span>
+    <div class="container nav-wrapper">
+      <a href="#" class="brand">
+        <img src="assets/avatar.png" alt="KRC Labs Avatar" class="brand-avatar">
+        <span class="brand-title">KRC Labs</span>
+        <span class="badge badge-node1" data-i18n="badgeStatus">Active Runtimes</span>
+      </a>
+
+      <div class="nav-controls">
+        <nav class="nav-links">
+          <a href="blog/" class="nav-link" data-i18n="navBlog">Blog</a>
+          <a href="docs/" class="nav-link" data-i18n="navDocs">Documentation</a>
+          <a href="#faq" class="nav-link" data-i18n="navFaq">FAQ</a>
+          <a href="feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="nav-link nav-link-rss" data-i18n="navRss" title="RSS Feed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align:-1px; margin-right:3px;"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            <span>RSS</span>
           </a>
+        </nav>
+
+        <!-- 10-Language Dropdown Selector -->
+        <div class="dropdown-wrapper">
+          <button class="dropdown-trigger" id="langTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" title="Language Selector / 언어 선택">
+            <span class="dropdown-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <span id="langTriggerLabel">English</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <div class="dropdown-menu" id="langMenu" role="listbox" aria-label="Select Language">
+            <button class="dropdown-item lang-item active" data-lang-val="en" role="option" id="lang-opt-en" aria-selected="true" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">US</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">English</span>
+                  <span class="lang-name-native">English</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="ko" role="option" id="lang-opt-ko" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">KR</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Korean</span>
+                  <span class="lang-name-native">한국어</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="ja" role="option" id="lang-opt-ja" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">JP</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Japanese</span>
+                  <span class="lang-name-native">日本語</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="zh" role="option" id="lang-opt-zh" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">CN</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Chinese</span>
+                  <span class="lang-name-native">简体中文</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="de" role="option" id="lang-opt-de" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">DE</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">German</span>
+                  <span class="lang-name-native">Deutsch</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="fr" role="option" id="lang-opt-fr" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">FR</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">French</span>
+                  <span class="lang-name-native">Français</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="es" role="option" id="lang-opt-es" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">ES</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Spanish</span>
+                  <span class="lang-name-native">Español</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="ru" role="option" id="lang-opt-ru" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">RU</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Russian</span>
+                  <span class="lang-name-native">Русский</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="hi" role="option" id="lang-opt-hi" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">IN</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Hindi</span>
+                  <span class="lang-name-native">हिन्दी</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item lang-item" data-lang-val="pt" role="option" id="lang-opt-pt" aria-selected="false" tabindex="-1">
+              <span class="item-left">
+                <span class="flag-badge">PT</span>
+                <span class="lang-text-group">
+                  <span class="lang-name-en">Portuguese</span>
+                  <span class="lang-name-native">Português</span>
+                </span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
         </div>
+
+        <!-- Sleek Theme Dropdown Selector (Low Eye Fatigue) -->
+        <div class="dropdown-wrapper">
+          <button class="dropdown-trigger" id="themeTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" title="Theme Selector / 테마 선택">
+            <span class="dropdown-icon" id="themeTriggerIcon">
+              <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+            <span id="themeTriggerLabel">다크</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <div class="dropdown-menu" id="themeMenu" role="listbox" aria-label="Select Theme">
+            <div class="dropdown-section-header" data-theme-group="dark">다크 테마 계열</div>
+            <button class="dropdown-item theme-item active" data-theme-val="dark">
+              <span class="item-left">
+                <span class="swatch-dot swatch-dark" style="background:#0d1117; border:1px solid #30363d;"></span>
+                <span class="theme-item-text">다크</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item theme-item" data-theme-val="forest">
+              <span class="item-left">
+                <span class="swatch-dot swatch-forest" style="background:#09130c; border:1px solid #1f3b27;"></span>
+                <span class="theme-item-text">포레스트</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-section-header" data-theme-group="light">화이트/라이트 계열</div>
+            <button class="dropdown-item theme-item" data-theme-val="sage">
+              <span class="item-left">
+                <span class="swatch-dot swatch-sage" style="background:#f4f7f4; border:1px solid #ccd8cc;"></span>
+                <span class="theme-item-text">연초록</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item theme-item" data-theme-val="paper">
+              <span class="item-left">
+                <span class="swatch-dot swatch-paper" style="background:#f8f5ee; border:1px solid #ddd4c2;"></span>
+                <span class="theme-item-text">페이퍼</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-section-header" data-theme-group="special">맞춤 & 시스템</div>
+            <button class="dropdown-item theme-item" data-theme-val="custom">
+              <span class="item-left">
+                <span class="swatch-dot swatch-custom" style="background:#8b5cf6; border:1px solid #a78bfa;"></span>
+                <span class="theme-item-text">커스텀</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="dropdown-item theme-item" data-theme-val="system">
+              <span class="item-left">
+                <span class="swatch-dot swatch-system" style="background:linear-gradient(135deg, #0d1117 50%, #f4f7f4 50%); border:1px solid #8b949e;"></span>
+                <span class="theme-item-text">시스템</span>
+              </span>
+              <svg class="check-mark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button class="btn btn-icon" id="headerHelpTrigger" title="Help Guide (?)" aria-label="Help">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:0.78rem;" data-i18n="helpTriggerText">Help</span>
+        </button>
+
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer" class="btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span>GitHub</span>
+        </a>
       </div>
     </div>
   </header>
 
-  <main class="wrapper">
-    <!-- Hero Section -->
-    <section class="hero" id="architecture">
-      <div class="eyebrow">
-        <span class="status-dot"></span>
-        <span>CLUSTER ACTIVE · 10 DETERMINISTIC RUNTIMES</span>
+  <main class="container">
+    <!-- Mobile / Tablet Quick Navigation Bar -->
+    <nav class="mobile-subnav-bar" id="mobileSubnavBar" aria-label="Quick Links">
+      <div class="mobile-subnav-scroll">
+        <a href="blog/" class="mobile-subnav-link" data-i18n="navBlog">Blog</a>
+        <a href="docs/" class="mobile-subnav-link" data-i18n="navDocs">Documentation</a>
+        <a href="#faq" class="mobile-subnav-link" data-i18n="navFaq">FAQ</a>
+        <a href="feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="mobile-subnav-link mobile-subnav-rss" data-i18n="navRss">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align:-1px; margin-right:2px;"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          <span>RSS</span>
+        </a>
       </div>
-      <h1>High-assurance runtime architecture & kernel systems.</h1>
-      <p>
-        KRC Labs는 저수준 드라이버리스 패킷 제어, 네이티브 바이너리 포렌식, Micro-VM 에페머럴 샌드박스 및 자율 MCP 파이프라인을 엔지니어링하는 분산 연구소입니다.
-      </p>
+    </nav>
 
-      <div class="cli-bar">
-        <span class="cli-prefix">$</span>
-        <span class="cli-cmd">git clone https://github.com/KRC-Labs/netvibe.git</span>
-        <button class="cli-copy" onclick="navigator.clipboard.writeText('git clone https://github.com/KRC-Labs/netvibe.git'); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 2000)">Copy</button>
+    <!-- Table of Contents Navigator (Interactive ScrollSpy & Quick Jump) -->
+    <nav class="toc-container" id="tableOfContents" aria-label="Table of Contents">
+      <div class="toc-wrapper">
+        <span class="toc-title-label" id="tocTitleLabel" data-i18n="tocTitle">메인 목차 바로가기</span>
+        <div class="toc-nav-list" role="tablist">
+          <a href="#systems" class="toc-nav-chip active" data-target-id="systems">
+            <span class="toc-chip-icon">📦</span>
+            <span data-toc-i18n="tocSystems">10대 핵심 런타임</span>
+          </a>
+          <a href="#faq" class="toc-nav-chip" data-target-id="faq">
+            <span class="toc-chip-icon">❓</span>
+            <span data-toc-i18n="tocFaq">자주 묻는 질문</span>
+          </a>
+          <a href="blog/" class="toc-nav-chip">
+            <span class="toc-chip-icon">📝</span>
+            <span data-i18n="navBlog">블로그</span>
+          </a>
+          <a href="docs/" class="toc-nav-chip">
+            <span class="toc-chip-icon">📚</span>
+            <span data-i18n="navDocs">문서</span>
+          </a>
+        </div>
       </div>
-    </section>
+    </nav>
+    <!-- Systems Catalog Section -->
+    <section id="systems" style="padding-top: 32px;">
+      <div class="section-head">
+        <h2 data-i18n="catalogTitle">Core Systems &amp; Micro-Runtimes</h2>
+        <p class="text-sm" data-i18n="catalogSubtitle">Independently maintained catalog of 10 private core research laboratory projects.</p>
+      </div>
 
-    <!-- Bento Grid Showcase -->
-    <section class="bento-section" id="engines">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Engine Catalog & Architecture</h2>
-          <p class="section-sub">도메인별로 격리된 10대 독립 프로덕트 및 분산 런타임 현황</p>
+      <!-- Filter & Search Bar -->
+      <div class="filter-bar">
+        <div class="tab-group" role="tablist">
+          <button class="tab-pill active" data-category="all" data-i18n="tabAll">All Systems (10)</button>
+          <button class="tab-pill" data-category="kernel" data-i18n="tabKernel">Kernel &amp; Network</button>
+          <button class="tab-pill" data-category="reverse" data-i18n="tabReverse">Reverse Engineering</button>
+          <button class="tab-pill" data-category="mcp" data-i18n="tabMcp">Security &amp; MCP</button>
+          <button class="tab-pill" data-category="cluster" data-i18n="tabCluster">Distributed Nodes</button>
         </div>
-        <div class="filter-tabs">
-          <button class="tab-btn active" onclick="filterCards('all')">All (10)</button>
-          <button class="tab-btn" onclick="filterCards('kernel')">Kernel & WFP</button>
-          <button class="tab-btn" onclick="filterCards('security')">Forensics & Security</button>
-          <button class="tab-btn" onclick="filterCards('mcp')">MCP & Web</button>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="text-xs text-muted" id="systemsCount">Showing 10 of 10 systems</span>
+          <div class="search-box">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="systemSearch" placeholder="Filter by name, tech, lead engineer..." aria-label="Search systems">
+          </div>
         </div>
       </div>
 
-      <div class="bento-grid">
-        
-        <!-- 1. netvibe (8 cols) -->
-        <div class="bento-card col-span-8" data-category="kernel">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">netvibe</span>
-              <span class="card-tag mint">RUST · WFP KERNEL</span>
-            </div>
-            <p class="card-desc">
-              별도의 커널 드라이버 설치 없이 Windows Filtering Platform(WFP) 저수준 API를 제어하는 제로 드라이버 네트워크 스니핑 및 양방향 패킷 셰이핑 엔진. QUIC 0-RTT 재연결 시뮬레이터 및 카오스 인젝터 내장.
-            </p>
-            <div class="terminal-mock">
-              <div class="term-line"><span class="term-sub">02:14:08</span> <span class="term-hl">[WFP:SUBSCRIBE]</span> Session bound to PID 4108 \Device\HarddiskVolume3\...</div>
-              <div class="term-line"><span class="term-sub">02:14:09</span> <span class="term-blue">[QUIC:0-RTT]</span> Injected chaos packet jitter (delta: 14.2ms) -> Verified 100% PASS</div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">Rust</span>
-              <span class="pill">WFP Layer 7</span>
-              <span class="pill">FastMCP</span>
-            </div>
-            <span class="lead-author">Lead: @kLauncher1</span>
-          </div>
-        </div>
-
-        <!-- 2. binvibe (4 cols) -->
-        <div class="bento-card col-span-4" data-category="security">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">binvibe</span>
-              <span class="card-tag cyan">DISASM · RVA</span>
-            </div>
-            <p class="card-desc">
-              고속 PE/ELF 메모리 패턴 스캐너 및 정적 바이너리 분석기. 마이크로 C 디컴파일 파이프라인 및 6대 역공학 엔진(IDA/Ghidra/x64dbg) 프로토콜 브리지 지원.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">C++20</span>
-              <span class="pill">Capstone</span>
-            </div>
-            <span class="lead-author">Lead: @GHSFS</span>
-          </div>
-        </div>
-
-        <!-- 3. vulnforge-mcp (4 cols) -->
-        <div class="bento-card col-span-4" data-category="security">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">vulnforge-mcp</span>
-              <span class="card-tag purple">MICRO-VM ATT</span>
-            </div>
-            <p class="card-desc">
-              Firecracker 및 gVisor 기반 마이크로 VM 경계 보안 감사 게이트웨이. 에페머럴 샌드박스 격리 무결성을 기계적으로 자동 증명.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">Firecracker</span>
-              <span class="pill">Security</span>
-            </div>
-            <span class="lead-author">Lead: @mason-keller</span>
-          </div>
-        </div>
-
-        <!-- 4. vibeside-mcp (4 cols) -->
-        <div class="bento-card col-span-4" data-category="mcp">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">vibeside-mcp</span>
-              <span class="card-tag mint">100-CORE MCP</span>
-            </div>
-            <p class="card-desc">
-              V8 힙 스냅샷 프로파일러 및 Retainer Tree 시각화 엔진. 100개 코어 MCP 인터페이스를 통합 지휘하는 자율 관제 런타임.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">TypeScript</span>
-              <span class="pill">V8 Heap</span>
-            </div>
-            <span class="lead-author">Lead: @minseokchoi87</span>
-          </div>
-        </div>
-
-        <!-- 5. webarcheology-mcp (4 cols) -->
-        <div class="bento-card col-span-4" data-category="mcp">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">webarcheology-mcp</span>
-              <span class="card-tag cyan">DOM FORENSICS</span>
-            </div>
-            <p class="card-desc">
-              웹 아키텍처 디컴파일러 및 DOM 타임머신 복원 툴킷. 렌더 트리 시각적 회귀 분석 및 오프라인 정적 신시사이저.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">DOM Tree</span>
-              <span class="pill">Chromium</span>
-            </div>
-            <span class="lead-author">Lead: @junhokim985</span>
-          </div>
-        </div>
-
-        <!-- 6. remote-auto-ai-worker (6 cols) -->
-        <div class="bento-card col-span-6" data-category="mcp">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">remote-auto-ai-worker</span>
-              <span class="card-tag">EDGE WORKERS</span>
-            </div>
-            <p class="card-desc">
-              Cloudflare Edge 기반 고성능 서버리스 MCP 게이트웨이 및 글로벌 비동기 태스크 스케줄러. 제로 트러스트 토큰 리스 브로커 내장.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">Cloudflare</span>
-              <span class="pill">Serverless</span>
-            </div>
-            <span class="lead-author">Lead: @alexmiller326</span>
-          </div>
-        </div>
-
-        <!-- 7. vidcompact-mcp (6 cols) -->
-        <div class="bento-card col-span-6" data-category="mcp">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">vidcompact-mcp</span>
-              <span class="card-tag">PERCEPTUAL VMAF</span>
-            </div>
-            <p class="card-desc">
-              FFmpeg 파이프라인 기반 지각적 품질(VMAF) 무손실 비디오 압축 최적화 도구. GPU 가속 및 프레임 레이트 자동 캘리브레이션 지원.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group">
-              <span class="pill">FFmpeg</span>
-              <span class="pill">VMAF > 95</span>
-            </div>
-            <span class="lead-author">Lead: @kevink661</span>
-          </div>
-        </div>
-
-        <!-- 8. omni-audio-mcp (4 cols) -->
-        <div class="bento-card col-span-4" data-category="kernel">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">omni-audio-mcp</span>
-              <span class="card-tag purple">GO DSP CORE</span>
-            </div>
-            <p class="card-desc">
-              Go 네이티브 초저지연 오디오 트래커 및 절차적 8-bit 사운드 FX 신시사이저. 실시간 오디오 버퍼링 제로 레이턴시 보장.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group"><span class="pill">Go</span><span class="pill">DSP</span></div>
-            <span class="lead-author">Lead: @RFSEO</span>
-          </div>
-        </div>
-
-        <!-- 9. omnibrowse (4 cols) -->
-        <div class="bento-card col-span-4" data-category="kernel">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">omnibrowse</span>
-              <span class="card-tag mint">RUST BROWSER</span>
-            </div>
-            <p class="card-desc">
-              차세대 듀얼 코어 초경량 브라우저. 인간 조작용 Native GUI와 AI 에이전트용 Headless MCP 런타임의 완전 격리 하이브리드 아키텍처.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group"><span class="pill">Rust</span><span class="pill">Chromium IPC</span></div>
-            <span class="lead-author">Lead: @minjun-k818</span>
-          </div>
-        </div>
-
-        <!-- 10. omni-control-mcp (4 cols) -->
-        <div class="bento-card col-span-4" data-category="mcp">
-          <div>
-            <div class="card-meta">
-              <span class="card-title">omni-control-mcp</span>
-              <span class="card-tag cyan">CLUSTER CONTROL</span>
-            </div>
-            <p class="card-desc">
-              멀티 플랫폼 코어 API 자율 관제 콘솔. 분산 노드 상태 동기화 및 백그라운드 프로세스 제로 좀비(Zero-Zombie) 생명주기 가디언.
-            </p>
-          </div>
-          <div class="card-footer">
-            <div class="pill-group"><span class="pill">TypeScript</span><span class="pill">Orchestrator</span></div>
-            <span class="lead-author">Lead: @mwkang9146</span>
-          </div>
-        </div>
-
+      <!-- Dynamic Systems Grid (Populated by TypeScript in 10 languages) -->
+      <div class="systems-grid" id="systemsGrid">
+        <!-- Injected via TypeScript -->
       </div>
     </section>
 
-    <!-- Cluster Nodes Section -->
-    <section class="bento-section" style="padding-top: 0;" id="cluster">
-      <div class="bento-card col-span-12">
-        <div class="card-meta">
-          <span class="card-title">Active Cluster Nodes & Telemetry</span>
-          <span class="card-tag mint">LIVE NODES (2)</span>
-        </div>
-        <p class="card-desc">
-          KRC Labs는 고립된 2개의 고성능 가상화 노드(Win VM 1 및 Win VM 2)에서 동기식 TDD 및 자율 마일스톤 빌드를 수행합니다.
-        </p>
+    <!-- Frequently Asked Questions (FAQ) Section -->
+    <section id="faq" class="faq-section" style="padding-top: 48px; padding-bottom: 32px; border-top: 1px solid var(--border-subtle); margin-top: 48px;">
+      <div class="section-head">
+        <h2 data-i18n="faqTitle">Frequently Asked Questions (FAQ)</h2>
+        <p class="text-sm" data-i18n="faqSubtitle">Key operational manual and engineering questions for KRC Labs Showcase</p>
+      </div>
 
-        <div class="cluster-status">
-          <div class="node-item">
-            <span class="node-dot"></span>
-            <strong>Node 1 (10.0.1.30):</strong> 5 Active Personas · netvibe, binvibe, vulnforge, vibeside, webarcheology
+      <div class="faq-grid">
+        <div class="faq-card">
+          <div class="faq-card-header">
+            <span class="faq-card-icon">🎨</span>
+            <h3 data-i18n="faqThemeQ">Are theme selections and custom palettes preserved across page reloads?</h3>
           </div>
-          <div style="color: var(--border);">|</div>
-          <div class="node-item">
-            <span class="node-dot"></span>
-            <strong>Node 2 (10.0.1.31):</strong> 5 Active Personas · remote-worker, vidcompact, omni-audio, omnibrowse, omni-control
+          <p data-i18n="faqThemeA">Yes. All 6 deterministic themes and Custom Theme Studio palettes are persisted in local storage with zero flash of unstyled content (Zero FOUC) across F5 reloads.</p>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-card-header">
+            <span class="faq-card-icon">🪟</span>
+            <h3 data-i18n="faqWindowQ">How do I manipulate the floating guide and theme studio windows?</h3>
           </div>
+          <p data-i18n="faqWindowA">Drag the titlebar to reposition across the viewport. Use the bottom-right corner handle to resize, and click the minimize button or double-click the titlebar to dock as a slim minibar.</p>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-card-header">
+            <span class="faq-card-icon">⌨️</span>
+            <h3 data-i18n="faqShortcutsQ">What power keyboard shortcuts are supported?</h3>
+          </div>
+          <p data-i18n="faqShortcutsA">Press '/' or Enter to focus real-time search, 'T' to cycle through all 6 themes, '?' to toggle the floating guide window, and 'Esc' to close active windows.</p>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
-    <div class="wrapper">
-      <div class="footer-inner">
-        <div>
-          <strong>KRC Labs</strong> — Autonomous Systems & Kernel Architecture Research
-        </div>
-        <div class="footer-links">
-          <a href="https://github.com/KRC-Labs" target="_blank">GitHub Organization</a>
-          <a href="mailto:jo06023535@gmail.com">Security Contact</a>
-          <span>Seoul, South Korea</span>
-        </div>
+    <div class="container footer-content">
+      <div data-i18n="footerTagline">
+        KRC Labs — KRC Research Institute
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer" data-i18n="footerOrg">GitHub Organization</a>
+        <a href="mailto:jo06023535@gmail.com" data-i18n="footerSecurity">Security Contact</a>
+        <span data-i18n="footerLocation">Seoul, South Korea</span>
       </div>
     </div>
   </footer>
 
-  <script>
-    function filterCards(category) {
-      const cards = document.querySelectorAll('.bento-card[data-category]');
-      const buttons = document.querySelectorAll('.tab-btn');
-      
-      buttons.forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+  <!-- Custom Theme Floating Studio Window (Movable, Resizable, Collapsible) -->
+  <div class="custom-window-container" id="customThemeModal" role="dialog" aria-label="Custom Theme Studio" aria-hidden="true">
+    <div class="custom-window" id="customWindowRoot">
+      <!-- Window Titlebar / Drag Handle -->
+      <div class="custom-window-titlebar" id="customWindowTitlebar" title="Drag to move window">
+        <div class="custom-window-title-group">
+          <span class="custom-window-status-dot"></span>
+          <span class="custom-window-title" id="customThemeTitle" style="display:none;">Custom Theme Studio</span>
+          <span class="custom-window-badge" id="customWindowModeBadge" style="display:none;">Live GUI</span>
+        </div>
 
-      cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-  </script>
+        <!-- Browser Tab Strip (Chrome / Arc Style Web-in-Web Window) -->
+        <div class="browser-tab-strip" id="customBrowserTabStrip" role="tablist">
+          <button class="browser-tab" id="customTabGuideBtn" data-tab="guide" type="button" role="tab">
+            <span class="browser-tab-icon">💡</span>
+            <span class="browser-tab-title" id="customTabGuideTitle" data-i18n="windowTabGuide">가이드 &amp; 도움말</span>
+            <span class="browser-tab-close" data-close-tab="guide" title="닫기">✕</span>
+          </button>
+          <div class="browser-tab-divider"></div>
+          <button class="browser-tab active" id="customTabThemeBtn" data-tab="theme" type="button" role="tab">
+            <span class="browser-tab-icon">🎨</span>
+            <span class="browser-tab-title" id="customTabThemeTitle" data-i18n="windowTabStudio">커스텀 테마</span>
+            <span class="browser-tab-close" data-close-tab="theme" title="닫기">✕</span>
+          </button>
+        </div>
+
+        <!-- Titlebar Opacity Hot-Reload Controller -->
+        <div class="titlebar-opacity-control" id="customOpacityControl" title="커스텀 테마 창 투명도 조절 (40%~100%)">
+          <svg class="titlebar-opacity-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>
+          </svg>
+          <span class="titlebar-opacity-label" id="customOpacityLabel" data-i18n="customOpacityLabel">창 투명도</span>
+          <input type="range" class="titlebar-opacity-slider" id="customWindowOpacityRange" min="40" max="100" step="1" value="85" aria-label="커스텀 테마 창 투명도 조절 (40%~100%)" />
+          <span class="titlebar-opacity-badge" id="customWindowOpacityVal">85%</span>
+        </div>
+        <div class="custom-window-actions">
+          <button class="custom-window-btn btn-split" id="customWindowSplitBtn" title="창 분리 / 탭 결합" aria-label="Toggle split or tab mode">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+          </button>
+          <button class="custom-window-btn btn-collapse" id="customWindowCollapseBtn" title="Collapse / Expand" aria-label="Collapse / Expand">
+            <svg class="icon-minimize" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg class="icon-maximize" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </button>
+          <button class="custom-window-btn btn-close" id="customModalClose" title="Close" aria-label="Close window">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Window Body (Scrollable & Collapsible) -->
+      <div class="custom-window-body" id="customWindowBody">
+        <p class="custom-window-desc" id="customThemeDesc">Low-fatigue custom palette studio engineered for extended kernel &amp; systems engineering sessions.</p>
+
+        <!-- Presets -->
+        <div>
+          <label style="font-size: 0.76rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;" data-i18n-custom="presets">Presets</label>
+          <div class="custom-presets-grid">
+            <button class="custom-preset-btn" data-preset-id="violet">
+              <span class="swatch-dot" style="background:#a855f7;"></span>
+              <span>Midnight Violet</span>
+            </button>
+            <button class="custom-preset-btn" data-preset-id="nord">
+              <span class="swatch-dot" style="background:#61afef;"></span>
+              <span>Nordic Frost</span>
+            </button>
+            <button class="custom-preset-btn" data-preset-id="solar">
+              <span class="swatch-dot" style="background:#b58900;"></span>
+              <span>Solarized Amber</span>
+            </button>
+            <button class="custom-preset-btn" data-preset-id="oled">
+              <span class="swatch-dot" style="background:#38bdf8;"></span>
+              <span>OLED Pure Black</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Color Controls -->
+        <div class="color-controls-grid">
+          <div class="color-field">
+            <label data-i18n-custom="bg">Background</label>
+            <div class="color-input-wrapper">
+              <input type="color" id="customBgInput" value="#14171f">
+              <span class="color-hex-label" id="customBgHex">#14171f</span>
+            </div>
+          </div>
+          <div class="color-field">
+            <label data-i18n-custom="surface">Surface</label>
+            <div class="color-input-wrapper">
+              <input type="color" id="customSurfaceInput" value="#1d222d">
+              <span class="color-hex-label" id="customSurfaceHex">#1d222d</span>
+            </div>
+          </div>
+          <div class="color-field">
+            <label data-i18n-custom="accent">Accent</label>
+            <div class="color-input-wrapper">
+              <input type="color" id="customAccentInput" value="#8b5cf6">
+              <span class="color-hex-label" id="customAccentHex">#8b5cf6</span>
+            </div>
+          </div>
+          <div class="color-field">
+            <label data-i18n-custom="text">Text</label>
+            <div class="color-input-wrapper">
+              <input type="color" id="customTextInput" value="#f1f5f9">
+              <span class="color-hex-label" id="customTextHex">#f1f5f9</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Preview Card -->
+        <div class="custom-preview-box" id="customLivePreview" style="background: #14171f; border-color: #384256;">
+          <span class="preview-card-text" style="color: #f1f5f9;">KRC Labs — Live Palette</span>
+          <span class="preview-card-accent" style="background: #8b5cf6;">Live Active</span>
+        </div>
+
+        <!-- System Typography & Design Engine -->
+        <div class="design-engine-section">
+          <div class="design-engine-header">
+            <span class="design-engine-title">
+              <span>⚙️</span>
+              <span id="customDesignEngineTitle">타이포그래피 및 디자인 엔진</span>
+            </span>
+          </div>
+
+          <div class="design-controls-grid">
+            <!-- 1. Font Family -->
+            <div class="design-field">
+              <label for="customFontSelect" id="customFontFamilyLabel" data-i18n="customFontFamily">글꼴 패밀리</label>
+              <select class="design-select" id="customFontSelect">
+                <option value="system">System Modern</option>
+                <option value="mono">Developer Mono</option>
+                <option value="neo">Neo Grotesque</option>
+                <option value="serif">Editorial Serif</option>
+              </select>
+            </div>
+
+            <!-- 2. Font Scale -->
+            <div class="design-field">
+              <label for="customFontScaleRange">
+                <span id="customFontScaleLabel" data-i18n="customFontScale">글자 크기</span>
+                <span class="design-field-val" id="customFontScaleVal">100%</span>
+              </label>
+              <input type="range" class="design-slider" id="customFontScaleRange" min="85" max="125" step="1" value="100" />
+            </div>
+
+            <!-- 3. Corner Radius -->
+            <div class="design-field">
+              <label for="customRadiusRange">
+                <span id="customRadiusLabel" data-i18n="customRadius">UI 모서리 곡률</span>
+                <span class="design-field-val" id="customRadiusVal">6px</span>
+              </label>
+              <input type="range" class="design-slider" id="customRadiusRange" min="0" max="20" step="1" value="6" />
+            </div>
+
+            <!-- 4. Glass Blur -->
+            <div class="design-field">
+              <label for="customBlurRange">
+                <span id="customBlurLabel" data-i18n="customBlur">배경 블러 강도</span>
+                <span class="design-field-val" id="customBlurVal">18px</span>
+              </label>
+              <input type="range" class="design-slider" id="customBlurRange" min="0" max="30" step="1" value="18" />
+            </div>
+          </div>
+
+          <!-- 5. Layout Density -->
+          <div class="design-field" style="margin-top: 4px;">
+            <label id="customDensityLabel" data-i18n="customDensity">레이아웃 밀도</label>
+            <div class="density-btn-group" id="customDensityGroup">
+              <button type="button" class="density-btn" data-density="compact" id="densityCompactBtn" data-i18n="densityCompact">컴팩트</button>
+              <button type="button" class="density-btn active" data-density="normal" id="densityNormalBtn" data-i18n="densityNormal">표준</button>
+              <button type="button" class="density-btn" data-density="relaxed" id="densityRelaxedBtn" data-i18n="densityRelaxed">여유로움</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-modal-actions">
+          <button class="btn" id="customModalReset" style="font-size: 0.8rem; padding: 6px 12px;">Reset</button>
+          <button class="btn btn-primary" id="customModalSave" style="font-size: 0.8rem; padding: 6px 16px;">Apply &amp; Save</button>
+        </div>
+      </div>
+
+      <!-- Resize Corner Handle -->
+      <div class="custom-window-resize-handle" id="customWindowResizeHandle" title="Resize window (drag)">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <line x1="8" y1="2" x2="2" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="5" x2="5" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="8" x2="8" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Quick Bar (Draggable, Pinnable via Right-Click/Long-Press) -->
+  <aside class="floating-quick-bar" id="floatingQuickBar" aria-label="Quick Actions">
+    <button class="fab-btn fab-scroll-top" id="scrollTopBtn" title="Scroll to Top (Right-Click: Pin/Unpin)" aria-label="Scroll to Top">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+      <span class="fab-pin-badge" id="scrollBtnPinBadge" title="Position Pinned">📌</span>
+    </button>
+    <button class="fab-btn fab-help" id="quickHelpBtn" title="Help Guide (?)" aria-label="Help">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+  </aside>
+
+  <!-- Toast Notification Feedback -->
+  <div class="krc-toast" id="krcToast" role="status" aria-live="polite"></div>
+
+  <!-- Floating Help & Guide Window GUI (Movable, Resizable, Collapsible) -->
+  <div class="custom-window-container help-window-container" id="helpModal" role="dialog" aria-label="System Guide &amp; Help" aria-hidden="true">
+    <div class="custom-window" id="helpWindowRoot">
+      <!-- Window Titlebar / Drag Handle -->
+      <div class="custom-window-titlebar" id="helpWindowTitlebar" title="Drag to move guide window">
+        <div class="custom-window-title-group">
+          <span class="custom-window-status-dot" style="background: var(--accent);"></span>
+          <span class="custom-window-title" id="helpModalTitle" style="display:none;">System Guide &amp; Help</span>
+          <span class="custom-window-badge" id="helpWindowModeBadge" style="display:none;">Guide GUI</span>
+        </div>
+
+        <!-- Browser Tab Strip (Chrome / Arc Style Web-in-Web Window) -->
+        <div class="browser-tab-strip" id="helpBrowserTabStrip" role="tablist">
+          <button class="browser-tab active" id="helpTabGuideBtn" data-tab="guide" type="button" role="tab">
+            <span class="browser-tab-icon">💡</span>
+            <span class="browser-tab-title" id="helpTabGuideTitle" data-i18n="windowTabGuide">가이드 &amp; 도움말</span>
+            <span class="browser-tab-close" data-close-tab="guide" title="닫기">✕</span>
+          </button>
+          <div class="browser-tab-divider"></div>
+          <button class="browser-tab" id="helpTabThemeBtn" data-tab="theme" type="button" role="tab">
+            <span class="browser-tab-icon">🎨</span>
+            <span class="browser-tab-title" id="helpTabThemeTitle" data-i18n="windowTabStudio">커스텀 테마</span>
+            <span class="browser-tab-close" data-close-tab="theme" title="닫기">✕</span>
+          </button>
+        </div>
+
+        <!-- Titlebar Opacity Hot-Reload Controller -->
+        <div class="titlebar-opacity-control" id="helpOpacityControl" title="도움말 창 투명도 조절 (40%~100%)">
+          <svg class="titlebar-opacity-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>
+          </svg>
+          <span class="titlebar-opacity-label" id="helpOpacityLabel" data-i18n="helpOpacityLabel">창 투명도</span>
+          <input type="range" class="titlebar-opacity-slider" id="helpWindowOpacityRange" min="40" max="100" step="1" value="85" aria-label="도움말 창 투명도 조절 (40%~100%)" />
+          <span class="titlebar-opacity-badge" id="helpWindowOpacityVal">85%</span>
+        </div>
+
+        <div class="custom-window-actions">
+          <button class="custom-window-btn btn-split" id="helpWindowSplitBtn" title="창 분리 / 탭 결합" aria-label="Toggle split or tab mode">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+          </button>
+          <button class="custom-window-btn btn-collapse" id="helpWindowCollapseBtn" title="Collapse / Expand" aria-label="Collapse / Expand">
+            <svg class="icon-minimize" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg class="icon-maximize" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </button>
+          <button class="custom-window-btn btn-close" id="helpModalClose" title="Close" aria-label="Close guide window">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Window Body (Scrollable & Collapsible) -->
+      <div class="custom-window-body help-window-body" id="helpWindowBody">
+        <p class="custom-window-desc" id="helpModalDesc">Interactive operational manual and shortcuts for KRC Labs Showcase</p>
+
+        <div class="help-guide-grid">
+          <div class="help-guide-card">
+            <div class="help-card-icon">🎨</div>
+            <div class="help-card-info">
+              <h4 data-i18n="helpGuideThemeTitle">Theme Families (6 Deterministic Themes)</h4>
+              <p data-help-item="theme">Theme families: Dark/Forest (Dark Family), Sage/Paper (Light Family), Custom/System</p>
+            </div>
+          </div>
+
+          <div class="help-guide-card">
+            <div class="help-card-icon">🪟</div>
+            <div class="help-card-info">
+              <h4 data-i18n="helpGuideWindowTitle">Custom Floating Window GUI</h4>
+              <p data-help-item="window">Custom window: Drag titlebar to move, bottom-right handle to resize, collapse/expand button</p>
+            </div>
+          </div>
+
+          <div class="help-guide-card">
+            <div class="help-card-icon">🚀</div>
+            <div class="help-card-info">
+              <h4 data-i18n="helpGuideScrollTitle">Scroll to Top Action Button</h4>
+              <p data-help-item="scroll">Scroll button: Drag to reposition, right-click (mobile: long press) to pin/lock position</p>
+            </div>
+          </div>
+
+          <div class="help-guide-card">
+            <div class="help-card-icon">⌨️</div>
+            <div class="help-card-info">
+              <h4 data-i18n="helpGuideShortcutsTitle">Shortcuts &amp; Gestures</h4>
+              <p data-help-item="shortcuts">Shortcuts: ? (Help), Esc (Close window), Double-click titlebar (Collapse/Expand)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-modal-actions" style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);">
+          <button class="btn btn-primary" id="helpModalCloseBtn" style="font-size: 0.8rem; padding: 6px 16px;">
+            <span id="helpModalCloseBtnText">Close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resize Corner Handle -->
+      <div class="custom-window-resize-handle" id="helpWindowResizeHandle" title="Resize guide window (drag)">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <line x1="8" y1="2" x2="2" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="5" x2="5" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="8" x2="8" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compiled TypeScript Application -->
+  <script type="module" src="dist/main.js"></script>
 </body>
 </html>

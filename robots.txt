@@ -1,0 +1,9 @@
+# KRC Labs — Systems Architecture & High-Assurance Runtimes
+# Official Crawler & Indexing Directives
+# Canonical Host: https://krc-labs.github.io/
+
+User-agent: *
+Allow: /
+
+# Canonical Sitemap Declaration
+Sitemap: https://krc-labs.github.io/sitemap.xml

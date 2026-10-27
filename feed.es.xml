@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KRC Labs — Arquitectura de Sistemas y Runtimes de Alta Seguridad</title>
+    <link>https://krc-labs.github.io/?lang=es</link>
+    <description>Registro de cambios técnicos y lanzamientos para motores de paquetes de kernel, binarios y runtimes MCP.</description>
+    <language>es-ES</language>
+    <lastBuildDate>Sat, 24 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://krc-labs.github.io/feed.es.xml" rel="self" type="application/rss+xml"/>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>KRC Labs Systems Technical Publication Engine (es)</generator>
+    <managingEditor>jo06023535@gmail.com (KRC Labs Core Systems Team)</managingEditor>
+    <webMaster>jo06023535@gmail.com (KRC Labs Infrastructure)</webMaster>
+
+    <!-- Item: vulnforge-mcp v1.24.0 -->
+    <item>
+      <title>vulnforge-mcp v1.24.0 Publicado: Aislamiento Micro-VM y Barrera de Atestación de Sandbox</title>
+      <link>https://krc-labs.github.io/?lang=es#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vulnforge-mcp-v1.24.0-es</guid>
+      <pubDate>Sat, 24 Oct 2026 08:30:00 +0000</pubDate>
+      <category>Systems Security / Sandboxing</category>
+      <description>Despliega aislamiento de micro-VM y barreras de atestación de sandbox en el Nodo 1 (10.0.1.30). Integra Linux KVM Firecracker y gVisor para fuzzing binario con atestación criptográfica y destrucción sin residuos.</description>
+    </item>
+
+    <!-- Item: vibeside-mcp v0.23.0 -->
+    <item>
+      <title>vibeside-mcp v0.23.0 Publicado: Generador de perfiles de memoria de montículo y árbol de retención</title>
+      <link>https://krc-labs.github.io/?lang=es#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-vibeside-mcp-v0.23.0-es</guid>
+      <pubDate>Fri, 23 Oct 2026 14:15:00 +0000</pubDate>
+      <category>Diagnostics / Memory Profiling</category>
+      <description>Introduce un analizador de montículos V8 y Chromium en el Nodo 1 (10.0.1.30). Construye árboles dominadores para identificar fugas de memoria, protegido por cifrado de hardware Windows DPAPI.</description>
+    </item>
+
+    <!-- Item: netvibe M27 -->
+    <item>
+      <title>netvibe M27 Completado: Simulador de migración de conexiones QUIC RFC 9000 y 9001 e inyector de caos</title>
+      <link>https://krc-labs.github.io/?lang=es#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-netvibe-M27-es</guid>
+      <pubDate>Thu, 22 Oct 2026 11:45:00 +0000</pubDate>
+      <category>Kernel Networking / Transport Protocols</category>
+      <description>Completa la simulación de migración de conexión QUIC RFC 9000/9001 en C++23 en el Nodo 1. Valida conmutación por error y rotación criptográfica de CID con motores PCAP de copia cero.</description>
+    </item>
+
+    <!-- Item: omnibrowse v0.4.0 -->
+    <item>
+      <title>OmniBrowse v0.4.0 Publicado: Puente CDP de Chromium sin cabeza anti-detección aislado con DPAPI</title>
+      <link>https://krc-labs.github.io/?lang=es#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-omnibrowse-v0.4.0-es</guid>
+      <pubDate>Tue, 20 Oct 2026 16:20:00 +0000</pubDate>
+      <category>Browser Automation / CDP Bridges</category>
+      <description>Ofrece un puente CDP de Chromium sin cabeza anti-detección en Rust en el Nodo 2. Normaliza huellas de WebGL y Canvas con almacenamiento cifrado por DPAPI.</description>
+    </item>
+
+    <!-- Item: binvibe v0.9.2 -->
+    <item>
+      <title>binvibe v0.9.2 Publicado: Reconstrucción de Grafos de Flujo de Control (CFG) PE/ELF y Puente Ghidra</title>
+      <link>https://krc-labs.github.io/?lang=es#systems</link>
+      <guid isPermaLink="false">krc-labs-milestone-binvibe-v0.9.2-es</guid>
+      <pubDate>Sun, 18 Oct 2026 09:30:00 +0000</pubDate>
+      <category>Reverse Engineering / Binary Forensics</category>
+      <description>Mejora el marco de desensamblado binario en el Nodo 1. Analiza instrucciones x86_64/ARM64 para reconstruir grafos de flujo de control con puente Ghidra bidireccional.</description>
+    </item>
+  </channel>
+</rss>

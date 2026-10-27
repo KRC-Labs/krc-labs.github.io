@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — KRC Labs Systems Architecture &amp; Runtimes</title>
+  
+  <!-- Synchronous F5 Theme Hydration Guard (Zero Flash / System Baseline) -->
+  <script>
+    (function() {
+      try {
+        var stored = localStorage.getItem('krc_theme_pref');
+        var theme = stored || 'system';
+        var effective = theme;
+        if (theme === 'system') {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          effective = isDark ? 'dark' : 'sage';
+        } else if (theme === 'custom') {
+          effective = 'custom';
+          var customRaw = localStorage.getItem('krc_custom_theme');
+          if (customRaw) {
+            var p = JSON.parse(customRaw);
+            var root = document.documentElement;
+            if (p.bg) root.style.setProperty('--bg', p.bg);
+            if (p.surface) root.style.setProperty('--surface', p.surface);
+            if (p.surfaceAlt) root.style.setProperty('--surface-alt', p.surfaceAlt);
+            if (p.border) root.style.setProperty('--border', p.border);
+            if (p.accent) {
+              root.style.setProperty('--accent', p.accent);
+              root.style.setProperty('--accent-hover', p.accent);
+              root.style.setProperty('--accent-bg', p.accent + '22');
+              root.style.setProperty('--accent-border', p.accent + '44');
+            }
+            if (p.textPrimary) root.style.setProperty('--text-primary', p.textPrimary);
+          }
+        }
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-pref', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta name="description" content="Official technical documentation, runtime API specifications, and architecture manuals for KRC Labs.">
+  <link rel="icon" type="image/png" href="../assets/avatar.png">
+
+  <!-- Feeds & Discovery -->
+  <link rel="alternate" type="application/rss+xml" title="KRC Labs — Global Feed" href="../feed.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ko" title="KRC Labs RSS 피드 (한국어)" href="../feed.ko.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="en" title="KRC Labs RSS Feed (English)" href="../feed.en.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ja" title="KRC Labs RSSフィード (日本語)" href="../feed.ja.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="zh" title="KRC Labs RSS订阅源 (简体中文)" href="../feed.zh.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="de" title="KRC Labs RSS-Feed (Deutsch)" href="../feed.de.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="fr" title="Flux RSS KRC Labs (Français)" href="../feed.fr.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="es" title="Canal RSS de KRC Labs (Español)" href="../feed.es.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="ru" title="RSS-лента KRC Labs (Русский)" href="../feed.ru.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="hi" title="KRC Labs RSS फ़ीड (हिन्दी)" href="../feed.hi.xml">
+  <link rel="alternate" type="application/rss+xml" hreflang="pt" title="Feed RSS KRC Labs (Português)" href="../feed.pt.xml">
+
+  <!-- Modular Stylesheets (Relative paths for GitHub Pages & Local Server) -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 36px;
+      padding: 36px 0 60px;
+    }
+    .docs-sidebar {
+      position: sticky;
+      top: 84px;
+      height: fit-content;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+    }
+    .docs-nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 12px 10px 6px;
+    }
+    .docs-nav-link {
+      display: block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .docs-nav-link:hover {
+      background: var(--surface-alt);
+      color: var(--text-primary);
+    }
+    .docs-nav-link.active {
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-weight: 600;
+      border: 1px solid var(--accent-border);
+    }
+    .docs-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 40px;
+    }
+    .docs-section {
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .docs-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .docs-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .docs-section h3 {
+      font-size: 1.15rem;
+      font-weight: 650;
+      color: var(--text-primary);
+      margin: 20px 0 8px;
+    }
+    .docs-section p {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .docs-code-block {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.84rem;
+      color: var(--text-primary);
+      overflow-x: auto;
+      margin: 14px 0;
+      line-height: 1.5;
+    }
+    @media (max-width: 820px) {
+      .docs-layout {
+        grid-template-columns: 1fr;
+      }
+      .docs-sidebar {
+        position: static;
+      }
+      .docs-content {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="../" class="brand" title="Back to KRC Labs Showcase">
+        <img src="../assets/avatar.png" alt="KRC Labs Avatar" class="brand-avatar">
+        <span class="brand-title">KRC Labs</span>
+        <span class="badge badge-node1">Technical Docs</span>
+      </a>
+
+      <div class="nav-controls">
+        <nav class="nav-links">
+          <a href="../" class="nav-link">← Showcase</a>
+          <a href="../blog/" class="nav-link">Blog</a>
+          <a href="../#faq" class="nav-link">FAQ</a>
+          <a href="../feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="nav-link nav-link-rss" title="RSS Feed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align:-1px; margin-right:3px;"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            <span>RSS</span>
+          </a>
+        </nav>
+
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer" class="btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="docs-layout">
+      <!-- Left Sidebar: Documentation Outline -->
+      <aside class="docs-sidebar" aria-label="Documentation Sidebar">
+        <div class="docs-nav-group-title">Architecture &amp; Core</div>
+        <a href="#overview" class="docs-nav-link active">1. Overview &amp; Cluster</a>
+        <a href="#packet-engine" class="docs-nav-link">2. Zero-Copy Packet Engine</a>
+        <a href="#binary-forensics" class="docs-nav-link">3. Binary Forensics Bridge</a>
+        
+        <div class="docs-nav-group-title">Security &amp; Runtimes</div>
+        <a href="#dpapi-security" class="docs-nav-link">4. DPAPI Hardware Vault</a>
+        <a href="#console-ref" class="docs-nav-link">5. Console CLI Reference</a>
+        <a href="#deployment" class="docs-nav-link">6. GitHub Pages Deployment</a>
+      </aside>
+
+      <!-- Right Content: Documentation Sections -->
+      <article class="docs-content">
+        <!-- Section 1: Overview & Cluster Quickstart -->
+        <section class="docs-section" id="overview">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node1">Architecture</span>
+            <span class="text-xs text-muted">Core Foundation</span>
+          </div>
+          <h2>1. Overview &amp; Cluster Quickstart</h2>
+          <p>
+            KRC Labs is a systems research laboratory specializing in deterministic micro-runtimes, high-frequency network packet processing, binary disassembly forensics, and hardware-isolated cryptographic credential vaults.
+          </p>
+          <h3>Cluster Topology</h3>
+          <p>
+            The laboratory operates two isolated virtualized execution nodes connected through a low-latency IPC bus:
+          </p>
+          <ul>
+            <li><strong>Node 1 (10.0.1.30):</strong> Core engineering runtimes including NetVibe (C++23 Zero-Copy Engine), BinVibe (Binary Disassembler), VulnForge MCP, VibeSide MCP, and WebArcheology MCP.</li>
+            <li><strong>Node 2 (10.0.1.31):</strong> Automation &amp; streaming runtimes including RemoteWorker, VidCompact MCP, OmniAudio MCP, OmniBrowse, and OmniControl MCP.</li>
+          </ul>
+          <div class="docs-code-block">
+# Inspect live cluster status via interactive terminal
+> status
+Cluster: Online (Operational)
+Runtimes: 10 Deterministic Active Systems
+Nodes: 2 Isolated Virtualized Instances (Node 1 &amp; Node 2)
+Security: Windows DPAPI Hardware Enclave Isolated
+          </div>
+        </section>
+
+        <!-- Section 2: Zero-Copy Packet Engine -->
+        <section class="docs-section" id="packet-engine">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node1">Kernel &amp; Network</span>
+            <span class="text-xs text-muted">Sub-Microsecond Ingestion</span>
+          </div>
+          <h2>2. Zero-Copy Packet Engine Pipeline</h2>
+          <p>
+            Built on modern C++23 standards, the NetVibe engine bypasses operating system socket kernel buffers by mapping DMA network interfaces directly into user-space circular ring buffers.
+          </p>
+          <div class="docs-code-block">
+// C++23 Zero-Copy Ring Ingestion Signature
+template &lt;size_t RingCapacity&gt;
+class AlignedPacketRing {
+public:
+    alignas(64) std::atomic&lt;uint64_t&gt; head_{0};
+    alignas(64) std::atomic&lt;uint64_t&gt; tail_{0};
+    
+    std::span&lt;const uint8_t&gt; ingest_zero_copy(const uint8_t* dma_ptr, size_t len) noexcept;
+};
+          </div>
+          <p>
+            Key metrics: Zero memory copies between physical NIC DMA and parsing buffers, sub-80ns packet classification, and strict lock-free multi-producer ring structures.
+          </p>
+        </section>
+
+        <!-- Section 3: Binary Forensics Bridge -->
+        <section class="docs-section" id="binary-forensics">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node2">Reverse Engineering</span>
+            <span class="text-xs text-muted">MCP Forensics Bridge</span>
+          </div>
+          <h2>3. Binary Forensics &amp; Native Disassembler Integration</h2>
+          <p>
+            BinVibe provides deterministic Model Context Protocol (MCP) bridges connecting headless IDA Pro engines and x64dbg native sessions. Security engineers inspect memory dumps, analyze function call graphs, and synchronize IL patches across remote cluster nodes.
+          </p>
+          <div class="docs-code-block">
+# Inspecting call graph via terminal
+> list
+1. netvibe (C++23 Zero-Copy Packet Engine)
+2. binvibe (Binary Forensics Disassembler)
+3. vulnforge-mcp (Kernel Exploit Analysis Engine)
+...
+          </div>
+        </section>
+
+        <!-- Section 4: DPAPI Hardware Vault -->
+        <section class="docs-section" id="dpapi-security">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node1">Hardware Security</span>
+            <span class="text-xs text-muted">TPM Enclave Bound</span>
+          </div>
+          <h2>4. Windows DPAPI Hardware Vault Specification</h2>
+          <p>
+            All persistent laboratory state, API keys, and custom theme studio configurations are encrypted using Windows Data Protection API (DPAPI) hardware-bound machine enclaves. No plaintext credentials ever persist on disk or in swap partitions.
+          </p>
+          <div class="docs-code-block">
+DATA_BLOB DataIn;
+DATA_BLOB DataOut;
+CryptProtectData(&amp;DataIn, L"KRC_ENCLAVE_KEY", &amp;Entropy, NULL, NULL, CRYPTPROTECT_LOCAL_MACHINE, &amp;DataOut);
+          </div>
+        </section>
+
+        <!-- Section 5: Console CLI Reference -->
+        <section class="docs-section" id="console-ref">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node2">CLI Reference</span>
+            <span class="text-xs text-muted">Cluster Shell</span>
+          </div>
+          <h2>5. Interactive Terminal Shell Command Reference</h2>
+          <p>
+            The interactive cluster shell provides 5 primary commands for system introspection:
+          </p>
+          <ul>
+            <li><code>help</code>: Displays operational syntax and command options.</li>
+            <li><code>status</code>: Queries live cluster health, node virtualization state, and hardware security enclave status.</li>
+            <li><code>nodes</code>: Inspects Node 1 (10.0.1.30) and Node 2 (10.0.1.31) active persona sessions.</li>
+            <li><code>list</code>: Outputs all 10 maintained core laboratory systems with tech stacks and lead engineer handles.</li>
+            <li><code>clear</code>: Resets terminal output stream and prints baseline system telemetry.</li>
+          </ul>
+        </section>
+
+        <!-- Section 6: GitHub Pages Deployment -->
+        <section class="docs-section" id="deployment">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span class="badge badge-node1">Deployment</span>
+            <span class="text-xs text-muted">Static Architecture</span>
+          </div>
+          <h2>6. GitHub Pages Static Deployment Architecture</h2>
+          <p>
+            The entire showcase, blog, and technical documentation are architected as zero-backend, statically deployable assets optimized for GitHub Pages:
+          </p>
+          <ul>
+            <li><strong>.nojekyll Flag:</strong> Bypasses Jekyll markdown parsing, ensuring all subdirectories and assets serve without MIME-type corruption.</li>
+            <li><strong>Relative Resource Resolution:</strong> Subdirectories (<code>blog/</code>, <code>docs/</code>) reference shared styles and assets using relative paths (<code>../styles/main.css</code>), guaranteeing 100% compatibility across repository subpaths and custom domains.</li>
+            <li><strong>W3C Feed Autodiscovery:</strong> Each HTML document advertises 10-language RSS 2.0 XML feeds in the head metadata for standard RSS aggregation.</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div>
+        KRC Labs — KRC Research Institute
+      </div>
+      <div class="footer-links">
+        <a href="../" title="Back to Showcase">← Showcase</a>
+        <a href="../blog/" title="Engineering Blog">Blog</a>
+        <a href="https://github.com/KRC-Labs" target="_blank" rel="noopener noreferrer">GitHub Organization</a>
+        <a href="mailto:jo06023535@gmail.com">Security Contact</a>
+        <span>Seoul, South Korea</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
